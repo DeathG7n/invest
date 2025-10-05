@@ -79,6 +79,7 @@ export function Navbar() {
 }
 
 export default function Page() {
+  const router = useRouter()
   return (
     <div className={styles.page}>
       <Navbar />
@@ -90,8 +91,8 @@ export default function Page() {
             financial structure
           </p>
           <div className={styles.btn}>
-            <button className={styles.grad}>Get Started</button>
-            <button className={styles.plain}>Know More</button>
+            <button className={styles.grad} onClick={() => router.push("/register")}>Get Started</button>
+            <button className={styles.plain} onClick={() => router.push("/about")}>Know More</button>
           </div>
         </section>
         <section className={styles.stats}>
@@ -803,6 +804,7 @@ export function Deposit() {
 }
 
 export function Join() {
+  const router = useRouter()
   return (
     <section className={styles.join}>
       <div className={styles.image}></div>
@@ -853,7 +855,7 @@ export function Join() {
             <strong>Need Help? mail us</strong>
           </p>
         </div>
-        <button className={styles.grad}>Learn More</button>
+        <button className={styles.grad} onClick={()=>router.push("/about")}>Learn More</button>
       </div>
     </section>
   );
