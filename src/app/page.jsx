@@ -15,7 +15,7 @@ import HeadsetIcon from "@mui/icons-material/Headset";
 import LockIcon from "@mui/icons-material/Lock";
 
 export function Navbar() {
-    const [pop, setPop] = useState(true);
+  const [pop, setPop] = useState(false);
   const router = useRouter();
   function handleClick() {
     setPop(!pop);
@@ -281,38 +281,44 @@ export default function Page() {
             <button>Subscribe</button>
           </div>
         </section>
-        <section className={styles.footer}>
-          <Image
-            src="/logo.jpg"
-            alt="Coin Logo"
-            className={styles.image}
-            width={100}
-            height={75}
-            priority
-          />
-          <div>
-            <span>
-              <FacebookOutlinedIcon sx={{ color: "grey" }} />
-            </span>
-            <span>
-              <LinkedInIcon sx={{ color: "grey" }} />
-            </span>
-            <span>
-              <TwitterIcon sx={{ color: "grey" }} />
-            </span>
-            <span>
-              <InstagramIcon sx={{ color: "grey" }} />
-            </span>
-          </div>
-          <ul>
-            <li>Home</li>
-            <li>About</li>
-            <li>Contact</li>
-          </ul>
-          <p>@ copyright 2013 - 2025 merchant invest.</p>
-        </section>
+        <Footer />
       </main>
     </div>
+  );
+}
+
+export function Footer() {
+  return (
+    <section className={styles.footer}>
+      <Image
+        src="/logo.jpg"
+        alt="Coin Logo"
+        className={styles.image}
+        width={100}
+        height={75}
+        priority
+      />
+      <div>
+        <span>
+          <FacebookOutlinedIcon sx={{ color: "grey" }} />
+        </span>
+        <span>
+          <LinkedInIcon sx={{ color: "grey" }} />
+        </span>
+        <span>
+          <TwitterIcon sx={{ color: "grey" }} />
+        </span>
+        <span>
+          <InstagramIcon sx={{ color: "grey" }} />
+        </span>
+      </div>
+      <ul>
+        <li>Home</li>
+        <li>About</li>
+        <li>Contact</li>
+      </ul>
+      <p>@ copyright 2013 - 2025 merchant invest.</p>
+    </section>
   );
 }
 
