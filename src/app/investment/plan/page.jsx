@@ -8,7 +8,7 @@ export default function Investment(){
             <Navbar/>
             <div className={styles.hero}>
                 <h1>Investment plan</h1>
-                <p>Home / Investment plan</p>
+                <p><span>Home</span> / Investment plan</p>
             </div>
             <Plans/>
             <Footer/>

@@ -308,7 +308,7 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  background-color: rgb(20, 20, 20);
+  background-color: rgb(32, 32, 32);
   color: #ffffff;
 
   .image {
@@ -396,7 +396,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: rgb(32, 32, 32);
+  background-color: rgb(20, 20, 20);
   color: #ffffff;
 
   h1 {
@@ -426,7 +426,7 @@
       width: 30%;
       padding: 20px 20px;
       border-radius: 10px;
-      background-color: rgb(20, 20, 20);
+      background-color: rgb(32, 32, 32);
       position: relative;
       overflow: hidden;
       display: flex;
@@ -588,7 +588,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: rgb(20, 20, 20);
+  background-color: rgb(32, 32, 32);
   color: #ffffff;
 
   h1 {
@@ -660,7 +660,7 @@
 
       @media (max-width: 600px) {
         width: 98vw;
-        background-color: rgb(20, 20, 20);
+        background-color: rgb(32, 32, 32);
         flex-direction: column;
         align-items: center;
         padding: 20px 0;
@@ -680,7 +680,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: rgb(32, 32, 32);
+  background-color: rgb(20, 20, 20);
   color: #ffffff;
 
   h1 {
@@ -748,7 +748,7 @@
 
       @media (max-width: 600px) {
         width: 98vw;
-        background-color: rgb(20, 20, 20);
+        background-color: rgb(32, 32, 32);
         padding: 20px 0;
       }
     }
@@ -766,7 +766,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: rgb(20, 20, 20);
+  background-color: rgb(32, 32, 32);
   color: #ffffff;
 
   h1 {
@@ -795,7 +795,7 @@
     .card {
       width: 100%;
       padding: 10px 20px;
-      background-color: rgb(32, 32, 32);
+      background-color: rgb(20, 20, 20);
       display: flex;
       flex-direction: column;
       font-size: 18px;
@@ -810,7 +810,7 @@
           width: 20px;
           height: 20px;
           border-radius: 50%;
-          background-color: rgb(20, 20, 20);
+          background-color: rgb(32, 32, 32);
           display: flex;
           align-items: center;
           justify-content: center;
@@ -844,7 +844,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: rgb(20, 20, 20);
+  background-color: rgb(32, 32, 32);
   color: #ffffff;
 
   h1 {
@@ -874,7 +874,7 @@
       flex-shrink: 0;
       width: 23%;
       padding: 10px 20px;
-      background-color: rgb(32, 32, 32);
+      background-color: rgb(20, 20, 20);
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -928,7 +928,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: rgb(32, 32, 32);
+  background-color: rgb(20, 20, 20);
   color: #ffffff;
 
   h1 {
@@ -950,7 +950,7 @@
     width: 100%;
     padding: 30px;
     border-radius: 10px;
-    background-color: rgb(20, 20, 20);
+    background-color: rgb(32, 32, 32);
     margin-top: 20px;
   }
   .history {
@@ -1061,7 +1061,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: rgb(20, 20, 20);
+  background-color: rgb(32, 32, 32);
   color: #ffffff;
 
   h1 {
@@ -1091,7 +1091,7 @@
       flex-shrink: 0;
       width: 32%;
       padding: 30px;
-      background-color: rgb(32, 32, 32);
+      background-color: rgb(20, 20, 20);
       font-size: 18px;
       border-radius: 10px;
 
@@ -1156,7 +1156,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: rgb(32, 32, 32);
+  background-color: rgb(20, 20, 20);
   color: #ffffff;
 
   h1 {
@@ -1184,7 +1184,7 @@
 
     .card {
       width: 48%;
-      background-color: rgb(20, 20, 20);
+      background-color: rgb(32, 32, 32);
       border-radius: 10px;
       display: flex;
       gap: 20px;
@@ -1362,6 +1362,7 @@
   align-items: center;
   justify-content: center;
   gap: 10px;
+  color: #fff;
 
   .image {
     border-radius: 5px;

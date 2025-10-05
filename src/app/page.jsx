@@ -37,7 +37,7 @@ export function Navbar() {
           Investment Plans
         </li>
         <li onClick={() => router.push("/about")}>About</li>
-        <li onClick={() => router.push("/contact")}>Contact</li>
+        <li onClick={() => router.push("/about")}>Contact</li>
         <li onClick={() => router.push("/blog")}>Blog</li>
       </ul>
       <div className={styles.select}>
@@ -112,60 +112,7 @@ export default function Page() {
             <p>Total Deposit since 2013</p>
           </div>
         </section>
-        <section className={styles.join}>
-          <div className={styles.image}></div>
-          <div className={styles.merchant}>
-            <h1>Join merchant community</h1>
-            <div>
-              <h2>WELCOME TO MERCHANTS INVEST COMPANY .</h2>
-              <p>
-                We take your privacy and security very serious here at merchants
-                invest.. <br />
-                As a platform you can trust, we're built with a 256 bit
-                encryption level to add an additional layer of security. <br />
-                You can protect your assets by setting up your account to use
-                google two factor authenticator.
-              </p>
-            </div>
-            <div>
-              <h2>OUR AMAZING FEATURES</h2>
-              <h3>Risk Analysis</h3>
-              <p>
-                'Business' means that you have to treat this endeavour as a
-                business and not a gamble. if you had a business plan to show
-                Warrent Buffett, would he approve and invest in you? Bussiness
-                that are strong with a clear strategy ,with a competitive moat.
-                You need to structure your trading business in the same way.
-                Make a deposit through our secure wallet to wallet transfer and
-                get credited almost instantly and start earning daily intrest
-                till deposit term expire
-              </p>
-              <h3>Complete Financial Planning</h3>
-              <p>
-                Developing a clear edge, sitting on your hands untill your edge
-                is in play (patient) diversifying your bets without
-                disworsifying them, and managing correlation is key to this part
-                of the equation. But also being in a personal posistion toi make
-                trading work for you. Dont think about paying up your bills
-                instantly with your trading. rather, make sure you have
-                diversify income streams that allows you learn survive and then
-                thrive without been pressured to perform
-              </p>
-              <h3>Cloud Mining</h3>
-              <p>
-                Mine Bitcoin in the cloud without buying any mining hardware.
-                Simply choose the amount of computing power you want to mine
-                with on our global datacenters and leave the rest to us. We have
-                set up a remote mining rig for you, simply select a plan that
-                best fits your financial capabilities and mine various crypto
-                currencies on the go. Looking to invest long term , merchants
-                invest . cloud mining is a sure go. <br />
-                <strong>Need Help? mail us</strong>
-              </p>
-            </div>
-            <button className={styles.grad}>Learn More</button>
-          </div>
-        </section>
+        <Join />
         <Plans />
         <section className={styles.invest}>
           <div>
@@ -269,21 +216,27 @@ export default function Page() {
             </div>
           </div>
         </section>
-        <section className={styles.letter}>
-          <h1>Our newsletter</h1>
-          <p>
-            Sign up to our newsletter, the alphagram, so you can be the first to
-            find out the latest news and tips about applications, as well as
-            general merchant invest updates
-          </p>
-          <div>
-            <input type="text" placeholder="Enter email here" />
-            <button>Subscribe</button>
-          </div>
-        </section>
+        <Letter />
         <Footer />
       </main>
     </div>
+  );
+}
+
+export function Letter() {
+  return (
+    <section className={styles.letter}>
+      <h1>Our newsletter</h1>
+      <p>
+        Sign up to our newsletter, the alphagram, so you can be the first to
+        find out the latest news and tips about applications, as well as general
+        merchant invest updates
+      </p>
+      <div>
+        <input type="text" placeholder="Enter email here" />
+        <button>Subscribe</button>
+      </div>
+    </section>
   );
 }
 
@@ -844,6 +797,63 @@ export function Deposit() {
             })}
           </div>
         </div>
+      </div>
+    </section>
+  );
+}
+
+export function Join() {
+  return (
+    <section className={styles.join}>
+      <div className={styles.image}></div>
+      <div className={styles.merchant}>
+        <h1>Join merchant community</h1>
+        <div>
+          <h2>WELCOME TO MERCHANTS INVEST COMPANY .</h2>
+          <p>
+            We take your privacy and security very serious here at merchants
+            invest.. <br />
+            As a platform you can trust, we're built with a 256 bit encryption
+            level to add an additional layer of security. <br />
+            You can protect your assets by setting up your account to use google
+            two factor authenticator.
+          </p>
+        </div>
+        <div>
+          <h2>OUR AMAZING FEATURES</h2>
+          <h3>Risk Analysis</h3>
+          <p>
+            'Business' means that you have to treat this endeavour as a business
+            and not a gamble. if you had a business plan to show Warrent
+            Buffett, would he approve and invest in you? Bussiness that are
+            strong with a clear strategy ,with a competitive moat. You need to
+            structure your trading business in the same way. Make a deposit
+            through our secure wallet to wallet transfer and get credited almost
+            instantly and start earning daily intrest till deposit term expire
+          </p>
+          <h3>Complete Financial Planning</h3>
+          <p>
+            Developing a clear edge, sitting on your hands untill your edge is
+            in play (patient) diversifying your bets without disworsifying them,
+            and managing correlation is key to this part of the equation. But
+            also being in a personal posistion toi make trading work for you.
+            Dont think about paying up your bills instantly with your trading.
+            rather, make sure you have diversify income streams that allows you
+            learn survive and then thrive without been pressured to perform
+          </p>
+          <h3>Cloud Mining</h3>
+          <p>
+            Mine Bitcoin in the cloud without buying any mining hardware. Simply
+            choose the amount of computing power you want to mine with on our
+            global datacenters and leave the rest to us. We have set up a remote
+            mining rig for you, simply select a plan that best fits your
+            financial capabilities and mine various crypto currencies on the go.
+            Looking to invest long term , merchants invest . cloud mining is a
+            sure go. <br />
+            <strong>Need Help? mail us</strong>
+          </p>
+        </div>
+        <button className={styles.grad}>Learn More</button>
       </div>
     </section>
   );
