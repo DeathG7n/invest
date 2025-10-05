@@ -14,65 +14,74 @@ import MoodIcon from "@mui/icons-material/Mood";
 import HeadsetIcon from "@mui/icons-material/Headset";
 import LockIcon from "@mui/icons-material/Lock";
 
-export default function Page() {
-  const [pop, setPop] = useState(true);
+export function Navbar() {
+    const [pop, setPop] = useState(true);
   const router = useRouter();
   function handleClick() {
     setPop(!pop);
   }
   return (
+    <nav className={styles.nav}>
+      <Image
+        src="/logo.jpg"
+        alt="Coin Logo"
+        className={styles.logo}
+        width={75}
+        height={50}
+        priority
+        onClick={() => router.push("/")}
+      />
+      <ul>
+        <li onClick={() => router.push("/")}>Home</li>
+        <li onClick={() => router.push("/investment/plan")}>
+          Investment Plans
+        </li>
+        <li onClick={() => router.push("/about")}>About</li>
+        <li onClick={() => router.push("/contact")}>Contact</li>
+        <li onClick={() => router.push("/blog")}>Blog</li>
+      </ul>
+      <div className={styles.select}>
+        <select name="lang" id="lang">
+          <option value="afrikaans">Afrikaans</option>
+          <option value="spanish">Spanish</option>
+          <option value="english">English</option>
+        </select>
+        <button className={styles.plain}>Login</button>
+        <button className={styles.grad}>Sign Up</button>
+      </div>
+      {pop && (
+        <main>
+          <ol onClick={() => router.push("/wallet")}>
+            <li>Home</li>
+            <li>Investment Plans</li>
+            <li>About</li>
+            <li>Contact</li>
+            <li>Blog</li>
+          </ol>
+          <div>
+            <select name="lang" id="lang">
+              <option value="afrikaans">Afrikaans</option>
+              <option value="spanish">Spanish</option>
+              <option value="english">English</option>
+            </select>
+            <button className={styles.plain}>Login</button>
+            <button className={styles.grad}>Sign Up</button>
+          </div>
+        </main>
+      )}
+      <div className={styles.menu} onClick={handleClick}>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </nav>
+  );
+}
+
+export default function Page() {
+  return (
     <div className={styles.page}>
-      <nav className={styles.nav}>
-        <Image
-          src="/logo.jpg"
-          alt="Coin Logo"
-          className={styles.logo}
-          width={75}
-          height={50}
-          priority
-        />
-        <ul>
-          <li>Home</li>
-          <li>Investment Plans</li>
-          <li>About</li>
-          <li>Contact</li>
-          <li>Blog</li>
-        </ul>
-        <div className={styles.select}>
-          <select name="lang" id="lang">
-            <option value="afrikaans">Afrikaans</option>
-            <option value="spanish">Spanish</option>
-            <option value="english">English</option>
-          </select>
-          <button className={styles.plain}>Login</button>
-          <button className={styles.grad}>Sign Up</button>
-        </div>
-        {pop && (
-          <main>
-            <ol onClick={() => router.push("/wallet")}>
-              <li>Home</li>
-              <li>Investment Plans</li>
-              <li>About</li>
-              <li>Contact</li>
-              <li>Blog</li>
-            </ol>
-            <div>
-              <select name="lang" id="lang">
-                <option value="afrikaans">Afrikaans</option>
-                <option value="spanish">Spanish</option>
-                <option value="english">English</option>
-              </select>
-              <button className={styles.plain}>Login</button>
-              <button className={styles.grad}>Sign Up</button>
-            </div>
-          </main>
-        )}
-        <div className={styles.menu}>
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
-      </nav>
+      <Navbar />
       <main>
         <section className={styles.hero}>
           <h1>Go to the next level of investing</h1>
@@ -232,7 +241,7 @@ export default function Page() {
                 </p>
                 <div className={styles.link}>
                   <div>Read more</div>
-                  <div>=</div>
+                  <div>⭢</div>
                 </div>
               </div>
             </div>
@@ -254,7 +263,7 @@ export default function Page() {
                 </p>
                 <div className={styles.link}>
                   <div>Read more</div>
-                  <div>=</div>
+                  <div>⭢</div>
                 </div>
               </div>
             </div>

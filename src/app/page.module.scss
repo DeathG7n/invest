@@ -98,6 +98,8 @@
   }
   .menu {
     display: none;
+    position: absolute;
+    right: 45px;
 
     @media (max-width: 600px) {
       width: 20px;
@@ -1245,6 +1247,10 @@
           font-size: 16px;
           line-height: 25px;
           color: #fff;
+
+          div:last-child{
+            font-size: 30px;
+          }
         }
         .link:hover {
           color: #f92f90;
