@@ -1,5 +1,5 @@
 {
-  "name": "hopkins",
+  "name": "invest",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,6 +9,10 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@mui/icons-material": "^7.3.4",
+    "@mui/material": "^7.3.4",
     "@prisma/client": "^4.16.1",
     "eslint": "8.43.0",
     "eslint-config-next": "13.4.6",
