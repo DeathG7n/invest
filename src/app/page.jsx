@@ -16,7 +16,7 @@ import LockIcon from "@mui/icons-material/Lock";
 
 export function Navbar() {
   const [pop, setPop] = useState(false);
-  const router = useRouter()
+  const router = useRouter();
   function handleClick() {
     setPop(!pop);
   }
@@ -46,17 +46,19 @@ export function Navbar() {
           <option value="spanish">Spanish</option>
           <option value="english">English</option>
         </select>
-        <button className={styles.plain}>Login</button>
-        <button className={styles.grad}>Sign Up</button>
+        <button className={styles.plain} onClick={() => router.push("/login")}>Login</button>
+        <button className={styles.grad} onClick={() => router.push("/register")}>Sign Up</button>
       </div>
       {pop && (
         <main>
-          <ol onClick={() => router.push("/wallet")}>
-            <li>Home</li>
-            <li>Investment Plans</li>
-            <li>About</li>
-            <li>Contact</li>
-            <li>Blog</li>
+          <ol>
+            <li onClick={() => router.push("/")}>Home</li>
+            <li onClick={() => router.push("/investment/plan")}>
+              Investment Plans
+            </li>
+            <li onClick={() => router.push("/about")}>About</li>
+            <li onClick={() => router.push("/about")}>Contact</li>
+            <li onClick={() => router.push("/blog")}>Blog</li>
           </ol>
           <div>
             <select name="lang" id="lang">
@@ -79,7 +81,7 @@ export function Navbar() {
 }
 
 export default function Page() {
-  const router = useRouter()
+  const router = useRouter();
   return (
     <div className={styles.page}>
       <Navbar />
@@ -91,8 +93,18 @@ export default function Page() {
             financial structure
           </p>
           <div className={styles.btn}>
-            <button className={styles.grad} onClick={() => router.push("/register")}>Get Started</button>
-            <button className={styles.plain} onClick={() => router.push("/about")}>Know More</button>
+            <button
+              className={styles.grad}
+              onClick={() => router.push("/register")}
+            >
+              Get Started
+            </button>
+            <button
+              className={styles.plain}
+              onClick={() => router.push("/about")}
+            >
+              Know More
+            </button>
           </div>
         </section>
         <section className={styles.stats}>
@@ -277,6 +289,7 @@ export function Footer() {
 }
 
 export function Plans() {
+  const router = useRouter()
   const bestPlans = [
     {
       plan: "Starting ~ plan",
@@ -363,7 +376,7 @@ export function Plans() {
                 </li>
               </ul>
               <p>Affiliate bonus</p>
-              <button className={styles.grad}>Invest now</button>
+              <button className={styles.grad} onClick={() => router.push("/register")}>Invest now</button>
             </div>
           );
         })}
@@ -804,7 +817,7 @@ export function Deposit() {
 }
 
 export function Join() {
-  const router = useRouter()
+  const router = useRouter();
   return (
     <section className={styles.join}>
       <div className={styles.image}></div>
@@ -855,7 +868,9 @@ export function Join() {
             <strong>Need Help? mail us</strong>
           </p>
         </div>
-        <button className={styles.grad} onClick={()=>router.push("/about")}>Learn More</button>
+        <button className={styles.grad} onClick={() => router.push("/about")}>
+          Learn More
+        </button>
       </div>
     </section>
   );

@@ -13,6 +13,7 @@ export default function Register() {
       ...form,
       [e.target.name]: e.target.value,
     });
+    console.log(form)
   };
 
   function handleSubmit() {
@@ -29,17 +30,14 @@ export default function Register() {
           "Content-type": "application/json",
         },
       })
-        .then((res) => {
-          console.log(res.status);
+        .then(async(res) => {
+          const data = await res.json();
+          console.log(res.status, data);
           if (res.status === 200) {
-            res.json();
-            // router.push("/login");
+            router.push("/login");
           } else {
           }
         })
-        .then((data) => {
-          console.log(data);
-        });
     }
   }
   return (
@@ -90,7 +88,7 @@ export default function Register() {
           <div>
             <label htmlFor="">Phone</label>
             <input
-              type="text"
+              type="number"
               name="phone"
               onChange={(e) => handleChange(e)}
               placeholder="Phone"

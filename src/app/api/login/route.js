@@ -1,8 +1,6 @@
 import { NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
 import { MongoClient } from "mongodb";
 
-const prisma = new PrismaClient();
 const client = new MongoClient(
   "mongodb+srv://DeathG7n:if3anYichukwu@cluster0.gpfyqmb.mongodb.net/?retryWrites=true&w=majority"
 );
@@ -22,25 +20,26 @@ export async function POST(req) {
     console.log(existingUser);
 
     if (existingUser) {
-      return NextResponse.json({ message: "User already exists" }, { status: 400 });
+      if (existingUser.password === body.password) {
+        return NextResponse.json({ message: "Welcome Back" }, { status: 200 });
+      } else {
+        return NextResponse.json(
+          { message: "Wrong Password" },
+          { status: 400 }
+        );
+      }
+    } else {
+      return NextResponse.json(
+        { message: "User doesn't exist" },
+        { status: 400 }
+      );
     }
-
-    await prisma.user.create({
-      data: {
-        first_name: body.first_name,
-        last_name: body.last_name,
-        user_name: body.user_name,
-        phone: body.phone,
-        email: body.email,
-        password: body.password,
-        agree: body.agree,
-      },
-    });
-
-    return NextResponse.json({ message: "User created successfully" }, { status: 201 });
   } catch (err) {
     console.error(err);
-    return NextResponse.json({ message: "Internal Server Error", error: err.message }, { status: 500 });
+    return NextResponse.json(
+      { message: "Internal Server Error", error: err.message },
+      { status: 500 }
+    );
   } finally {
     await client.close().catch(() => {});
   }

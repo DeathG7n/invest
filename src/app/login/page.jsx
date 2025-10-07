@@ -19,7 +19,7 @@ export default function Login() {
     if (form.length === 0) {
       return;
     } else {
-      fetch("/api/register", {
+      fetch("/api/login", {
         method: "POST",
         cache: "no-cache",
         body: JSON.stringify({
@@ -29,17 +29,14 @@ export default function Login() {
           "Content-type": "application/json",
         },
       })
-        .then((res) => {
-          console.log(res.status);
+        .then(async(res) => {
+          const data = await res.json();
+          console.log(res.status, data);
           if (res.status === 200) {
-            res.json();
-            router.push("/");
+            router.push("/dashboard");
           } else {
           }
         })
-        .then((data) => {
-          console.log(data);
-        });
     }
   }
   return (
