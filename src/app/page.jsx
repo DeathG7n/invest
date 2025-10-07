@@ -16,7 +16,7 @@ import LockIcon from "@mui/icons-material/Lock";
 
 export function Navbar() {
   const [pop, setPop] = useState(false);
-  const router = useRouter();
+  const router = useRouter()
   function handleClick() {
     setPop(!pop);
   }
