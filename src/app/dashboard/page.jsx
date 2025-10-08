@@ -16,6 +16,11 @@ export default function Home() {
   const [login, setLogin] = useState({});
   const router = useRouter();
 
+  function logOut(){
+    localStorage.removeItem("login");
+    router.push("/login");
+  }
+
   useEffect(() => {
     const item = localStorage.getItem("login");
     setLogin(JSON.parse(item));
@@ -59,7 +64,7 @@ export default function Home() {
           <div className={styles.header}>
             <p>WALLET ID: {data?.data?.id.slice(0, 6)}</p>
             <PersonIcon />
-            <LogoutIcon />
+            <LogoutIcon onClick={logOut}/>
           </div>
           <div className={styles.total}>
             <p>TOTAL BALANCE</p>
