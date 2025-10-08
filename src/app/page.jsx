@@ -23,10 +23,10 @@ export function Navbar() {
   return (
     <nav className={styles.nav}>
       <Image
-        src="/logo.jpg"
+        src="/logo.ico"
         alt="Coin Logo"
         className={styles.logo}
-        width={75}
+        width={150}
         height={50}
         priority
         onClick={() => router.push("/")}
@@ -66,8 +66,18 @@ export function Navbar() {
             <li onClick={() => router.push("/blog")}>EN</li>
           </ol>
           <div>
-            <button className={styles.plain}>Login</button>
-            <button className={styles.grad}>Register</button>
+            <button
+              className={styles.plain}
+              onClick={() => router.push("/login")}
+            >
+              Login
+            </button>
+            <button
+              className={styles.grad}
+              onClick={() => router.push("/register")}
+            >
+              Register
+            </button>
           </div>
         </main>
       )}
@@ -144,7 +154,7 @@ export default function Page() {
           <div className={styles.header}>
             <h1>Thousands of supported coins and tokens</h1>
             <div className={styles.btn}>
-              <button className={styles.plain}>
+              <button className={styles.plain} onClick={() => router.push("/register")}>
                 See all supported cryptos
               </button>
             </div>
@@ -217,10 +227,10 @@ export function Footer() {
   return (
     <section className={styles.footer}>
       <Image
-        src="/logo.jpg"
+        src="/logo.ico"
         alt="Coin Logo"
         className={styles.image}
-        width={100}
+        width={150}
         height={75}
         priority
       />
@@ -240,7 +250,7 @@ export function Find() {
       <div className={styles.header}>
         <h1>Find the right Web3 Connect wallet for you</h1>
         <div className={styles.btn}>
-          <button className={styles.plain}>Compare Ledger Wallets</button>
+          <button className={styles.plain} onClick={() => router.push("/register")}>Compare Ledger Wallets</button>
         </div>
       </div>
       <div className={styles.content}>
@@ -252,9 +262,9 @@ export function Find() {
             to easily experience and manage crypto & NFTs.
           </p>
           <p className={styles.gray}>
-            <div className={styles.star}>★★★★★</div>0 Reviews
+            <span className={styles.star}>★★★★★</span>0 Reviews
           </p>
-          <button>Discover now →</button>
+          <button onClick={() => router.push("/register")}>Discover now →</button>
         </div>
         <div className={styles.card}>
           <span>NEW</span>
@@ -264,9 +274,9 @@ export function Find() {
             manage crypto and NFTs.
           </p>
           <p className={styles.gray}>
-            <div className={styles.star}>★★★★★</div>0 Reviews
+            <span className={styles.star}>★★★★★</span>0 Reviews
           </p>
-          <button>Discover now →</button>
+          <button onClick={() => router.push("/register")}>Discover now →</button>
         </div>
         <div className={styles.card}>
           <span>NEW</span>
@@ -276,9 +286,9 @@ export function Find() {
             essential security features to secure your digital assets.
           </p>
           <p className={styles.gray}>
-            <div className={styles.star}>★★★★★</div>0 Reviews
+            <span className={styles.star}>★★★★★</span>0 Reviews
           </p>
-          <button>Discover now →</button>
+          <button onClick={() => router.push("/register")}>Discover now →</button>
         </div>
       </div>
     </section>

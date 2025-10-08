@@ -17,7 +17,7 @@ export default function Register() {
   };
 
   function handleSubmit() {
-    if (form.length === 0 && form?.password !== form?.confirm_password) {
+    if (form.length === 0 && form?.email !== form?.retype_email) {
       return;
     } else {
       fetch("/api/register", {
@@ -45,10 +45,10 @@ export default function Register() {
       <div className={styles.main}>
         <nav className={styles.nav}>
           <Image
-            src="/logo.jpg"
+            src="/logo.ico"
             alt="Coin Logo"
             className={styles.logo}
-            width={90}
+            width={150}
             height={65}
             priority
             onClick={() => router.push("/")}
@@ -59,39 +59,21 @@ export default function Register() {
         <h1>Create an account</h1>
         <section className={styles.invest}>
           <div>
-            <label htmlFor="">First Name</label>
+            <label htmlFor="">Full Name</label>
             <input
               type="text"
-              name="first_name"
-              placeholder="First Name"
+              name="full_name"
+              placeholder="Full Name"
               onChange={(e) => handleChange(e)}
             />
           </div>
           <div>
-            <label htmlFor="">Last Name</label>
-            <input
-              type="text"
-              name="last_name"
-              onChange={(e) => handleChange(e)}
-              placeholder="Last Name"
-            />
-          </div>
-          <div>
-            <label htmlFor="">Username</label>
+            <label htmlFor="">User Name</label>
             <input
               type="text"
               name="user_name"
               onChange={(e) => handleChange(e)}
-              placeholder="User name"
-            />
-          </div>
-          <div>
-            <label htmlFor="">Phone</label>
-            <input
-              type="number"
-              name="phone"
-              onChange={(e) => handleChange(e)}
-              placeholder="Phone"
+              placeholder="User Name"
             />
           </div>
           <div className={styles.email}>
@@ -103,6 +85,24 @@ export default function Register() {
               placeholder="Email"
             />
           </div>
+          <div className={styles.email}>
+            <label htmlFor="">Retype Email</label>
+            <input
+              type="text"
+              name="retype_email"
+              onChange={(e) => handleChange(e)}
+              placeholder="Retype Email"
+            />
+          </div>
+          <div>
+            <label htmlFor="">Country</label>
+            <input
+              type="text"
+              name="country"
+              onChange={(e) => handleChange(e)}
+              placeholder="Country"
+            />
+          </div>
           <div>
             <label htmlFor="">Password</label>
             <input
@@ -110,15 +110,6 @@ export default function Register() {
               name="password"
               onChange={(e) => handleChange(e)}
               placeholder="Password"
-            />
-          </div>
-          <div>
-            <label htmlFor="">Confirm Password</label>
-            <input
-              type="text"
-              name="confirm_password"
-              onChange={(e) => handleChange(e)}
-              placeholder="Confirm Password"
             />
           </div>
         </section>

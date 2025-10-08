@@ -3,45 +3,65 @@ import { PrismaClient } from "@prisma/client";
 import { MongoClient } from "mongodb";
 
 const prisma = new PrismaClient();
-const client = new MongoClient(
-  "mongodb+srv://DeathG7n:if3anYichukwu@cluster0.gpfyqmb.mongodb.net/?retryWrites=true&w=majority"
-);
-
-async function getDB(dbName) {
-  await client.connect();
-  console.log("Connected to Database");
-  return client.db(dbName).collection("user");
-}
 
 export async function POST(req) {
+  const body = await req.json();
   try {
-    const body = await req.json();
-
-    const userCollection = await getDB("users");
-    const existingUser = await userCollection.findOne({ email: body.email });
+    const existingUser = await prisma.user.findFirst({
+      where: {
+        email: body.email,
+      },
+    });
     console.log(existingUser);
 
     if (existingUser) {
-      return NextResponse.json({ message: "User already exists" }, { status: 400 });
+      return NextResponse.json(
+        { message: "User already exists" },
+        { status: 400 }
+      );
+    } else {
+      const portfolio = {
+        assets: {
+          coins: [
+            {
+              name: "Bitcoin",
+              amount: 0,
+              sym: "BTC"
+            },
+            {
+              name: "Ethereum",
+              amount: 0,
+              sym: "ETH"
+            },
+            {
+              name: "Tether(Trc20)",
+              amount: 0,
+              sym: "USDT"
+            },
+          ],
+        },
+      };
+      await prisma.user.create({
+        data: {
+          full_name: body.full_name,
+          user_name: body.user_name,
+          email: body.email,
+          country: body.country,
+          password: body.password,
+          agree: body.agree,
+          portfolio: portfolio,
+        },
+      });
+      return NextResponse.json(
+        { message: "User created successfully" },
+        { status: 200 }
+      );
     }
-
-    await prisma.user.create({
-      data: {
-        first_name: body.first_name,
-        last_name: body.last_name,
-        user_name: body.user_name,
-        phone: body.phone,
-        email: body.email,
-        password: body.password,
-        agree: body.agree,
-      },
-    });
-
-    return NextResponse.json({ message: "User created successfully" }, { status: 201 });
   } catch (err) {
     console.error(err);
-    return NextResponse.json({ message: "Internal Server Error", error: err.message }, { status: 500 });
-  } finally {
-    await client.close().catch(() => {});
+    return NextResponse.json(
+      { message: "Internal Server Error", error: err.message },
+      { status: 500 }
+    );
   }
 }
