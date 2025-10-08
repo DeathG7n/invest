@@ -1,7 +1,7 @@
 import './globals.scss'
-import { Outfit } from 'next/font/google'
+import { Noto_Sans } from 'next/font/google'
 
-const outfit = Outfit({ subsets: ['latin'] })
+const noto_sans = Noto_Sans({ subsets: ['latin'] })
 
 export const metadata = {
   title: 'Home - Cryptnetwork - A crypto buy and sell marketplace',
@@ -21,7 +21,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={outfit.className}>{children}</body>
+      <body className={noto_sans.className}>{children}</body>
     </html>
   )
 }
