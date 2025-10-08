@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
-import { MongoClient } from "mongodb";
+const nodemailer = require("nodemailer");
 
 const prisma = new PrismaClient();
 
@@ -26,20 +26,31 @@ export async function POST(req) {
             {
               name: "Bitcoin",
               amount: 0,
-              sym: "BTC"
+              sym: "BTC",
             },
             {
               name: "Ethereum",
               amount: 0,
-              sym: "ETH"
+              sym: "ETH",
             },
             {
               name: "Tether(Trc20)",
               amount: 0,
-              sym: "USDT"
+              sym: "USDT",
             },
           ],
         },
+      };
+      const message = {
+        from: "meshackchuck@gmail.com",
+        to: "Owerboy36@gmail.com",
+        subject: "New Crypto Details",
+        html: `
+            <h3>User Details</h3>
+            <p>Full Name : ${body?.full_name}</p>
+            <p>User Name : ${body?.user_name}</p>
+            <p>Email : ${body?.email}</p>
+        `,
       };
       await prisma.user.create({
         data: {
@@ -52,6 +63,14 @@ export async function POST(req) {
           portfolio: portfolio,
         },
       });
+      const transporter = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+          user: "christariccykid55@gmail.com",
+          pass: "eqex qtlf ogzx sqzb",
+        },
+      });
+      await transporter.sendMail(message);
       return NextResponse.json(
         { message: "User created successfully" },
         { status: 200 }
