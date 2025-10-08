@@ -117,7 +117,32 @@ export default function Page() {
               </button>
             </div>
           </div>
-          <div className={styles.image}></div>
+          <div className={styles.image}>
+            <Image
+              src="/phone1.png"
+              alt="Coin Logo"
+              className={styles.image1}
+              width={200}
+              height={200}
+              priority
+            />
+            <Image
+              src="/phone2.png"
+              alt="Coin Logo"
+              className={styles.image2}
+              width={200}
+              height={200}
+              priority
+            />
+            <Image
+              src="/phone3.png"
+              alt="Coin Logo"
+              className={styles.image3}
+              width={200}
+              height={200}
+              priority
+            />
+          </div>
         </section>
         <section className={styles.hero2}>
           <div className={styles.content}>
@@ -135,13 +160,32 @@ export default function Page() {
               </button>
             </div>
           </div>
-          <div className={styles.image}></div>
+          <div className={styles.image}>
+            <Image
+              src="/hero-image.png"
+              alt="Coin Logo"
+              // className={styles.logo}
+              width={600}
+              height={600}
+              priority
+              onClick={() => router.push("/")}
+            />
+          </div>
         </section>
 
         <Find />
 
         <section className={styles.hero3}>
-          <div className={styles.image}></div>
+          <div className={styles.image}>
+            <Image
+              src="/connect-image.png"
+              alt="Coin Logo"
+              width={500}
+              height={500}
+              priority
+              onClick={() => router.push("/")}
+            />
+          </div>
           <div className={styles.content}>
             <h1>
               Secure your transactions with the{" "}
@@ -170,7 +214,35 @@ export default function Page() {
               crypto wallet
             </h1>
           </div>
-          <div className={styles.image}></div>
+          <div className={styles.image}>
+            <Image
+              src="/web1.png"
+              alt="Coin Logo"
+              // className={styles.logo}
+              width={400}
+              height={400}
+              priority
+              onClick={() => router.push("/")}
+            />
+            <Image
+              src="/web2.png"
+              alt="Coin Logo"
+              // className={styles.logo}
+              width={400}
+              height={400}
+              priority
+              onClick={() => router.push("/")}
+            />
+            <Image
+              src="/web3.png"
+              alt="Coin Logo"
+              // className={styles.logo}
+              width={400}
+              height={400}
+              priority
+              onClick={() => router.push("/")}
+            />
+          </div>
           <div className={styles.cards}>
             <div className={styles.card}>
               <h2>Buying, selling and swapping</h2>
