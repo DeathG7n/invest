@@ -164,7 +164,7 @@ export default function Page() {
             <Image
               src="/hero-image.png"
               alt="Coin Logo"
-              // className={styles.logo}
+              className={styles.image1}
               width={600}
               height={600}
               priority
@@ -180,6 +180,7 @@ export default function Page() {
             <Image
               src="/connect-image.png"
               alt="Coin Logo"
+              className={styles.image1}
               width={500}
               height={500}
               priority

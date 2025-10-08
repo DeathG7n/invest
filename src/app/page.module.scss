@@ -234,11 +234,19 @@
     .image3 {
       position: relative;
       animation: float 3s ease-in-out infinite;
+      @media (max-width: 600px) {
+        width: 100px;
+        height: 100px;
+      }
     }
 
     .image2{
       position: relative;
       animation: float1 3s ease-in-out infinite;
+      @media (max-width: 600px) {
+        width: 150px;
+        height: 150px;
+      }
     }
 
     @keyframes float {
@@ -351,6 +359,14 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 10px 0;
+
+    .image1{
+      @media (max-width: 600px) {
+        width: 350px;
+        height: 350px;
+      }
+    }
 
     @media (max-width: 600px) {
       width: 100%;
@@ -406,6 +422,13 @@
     display: flex;
     align-items: center;
     justify-content: center;
+
+    .image1{
+      @media (max-width: 600px) {
+        width: 350px;
+        height: 350px;
+      }
+    }
 
     @media (max-width: 600px) {
       width: 100%;
