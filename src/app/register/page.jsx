@@ -8,6 +8,11 @@ import { useRouter } from "next/navigation";
 export default function Register() {
   const router = useRouter()
   const [form, setForm] = useState([]);
+  const [loading, setLoading] = useState(false)
+
+  function handleLoading(){
+    setLoading(!loading)
+  }
   const handleChange = (e) => {
     setForm({
       ...form,
@@ -42,6 +47,7 @@ export default function Register() {
   }
   return (
     <div className={styles.register}>
+      {loading && <Loader/>}
       <div className={styles.main}>
         <nav className={styles.nav}>
           <Image
@@ -138,4 +144,18 @@ export default function Register() {
       </div>
     </div>
   );
+}
+
+export function Loader(){
+  return (
+    <section className={styles.loader}>
+        <Image
+          src="/logo.jpg"
+          alt="Coin Logo"
+          width={50}
+          height={50}
+          priority
+        />
+    </section>
+  )
 }

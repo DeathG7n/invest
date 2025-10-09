@@ -4,10 +4,17 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export async function GET(req) {
-  const body = await req.json();
   try {
-    const users = await prisma.user.findMany();
-    return NextResponse.json({ data: users }, { status: 200 })
+    const existingUsers = await prisma.user.findMany();
+
+    if (existingUsers) {
+      return NextResponse.json({data: existingUsers }, { status: 200 });
+    } else {
+      return NextResponse.json(
+        { message: "User doesn't exist" },
+        { status: 400 }
+      );
+    }
   } catch (err) {
     console.error(err);
     return NextResponse.json(
