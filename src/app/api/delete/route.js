@@ -16,7 +16,7 @@ export async function POST(req) {
       const coins = existingUser?.portfolio?.assets?.coins?.map((i) => {
         return i;
       });
-      const currentCoin = coins?.find((i) => i?.sym.toLowerCase() == body?.sym.toLowerCase());
+      const currentCoin = coins?.find((i) => i?.sym.toLowerCase().trim() == body?.sym.toLowerCase().trim());
       if (currentCoin) {
         const index = coins?.indexOf(currentCoin);
         coins.splice(index, 1)

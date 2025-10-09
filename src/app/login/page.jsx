@@ -4,10 +4,18 @@ import styles from "./page.module.scss";
 import Image from "next/image";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { Loader } from "../register/page";
 
 export default function Login() {
   const router = useRouter();
   const [form, setForm] = useState([]);
+  const [data, setData] = useState({})
+  const [error, setError] = useState(false)
+  const [loading, setLoading] = useState(false);
+
+  function handleLoading(load) {
+    setLoading(load);
+  }
   const handleChange = (e) => {
     setForm({
       ...form,
@@ -19,6 +27,8 @@ export default function Login() {
     if (form.length === 0) {
       return;
     } else {
+      setError(false)
+      handleLoading(true);
       fetch("/api/login", {
         method: "POST",
         cache: "no-cache",
@@ -29,7 +39,9 @@ export default function Login() {
           "Content-type": "application/json",
         },
       }).then(async (res) => {
+        handleLoading(false);
         const data = await res.json();
+        setData(data)
         console.log(res.status, data);
         if (res.status === 200) {
           const now = new Date()
@@ -40,12 +52,14 @@ export default function Login() {
           }))
           router.push("/dashboard");
         } else {
+            setError(true)
         }
       });
     }
   }
   return (
     <div className={styles.login}>
+      {loading && <Loader />}
       <div className={styles.main}>
         <nav className={styles.nav}>
           <Image
@@ -85,6 +99,7 @@ export default function Login() {
               placeholder="Enter password"
             />
           </div>
+          <p className={styles.error}>{data?.message}</p>
           <p>Forget password?</p>
           <button className={styles.grad} onClick={handleSubmit}>
             Login

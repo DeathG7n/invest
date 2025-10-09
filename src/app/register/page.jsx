@@ -6,25 +6,29 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 export default function Register() {
-  const router = useRouter()
+  const router = useRouter();
   const [form, setForm] = useState([]);
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false)
+  const [data, setData] = useState({})
 
-  function handleLoading(){
-    setLoading(!loading)
+  function handleLoading(load) {
+    setLoading(load);
   }
   const handleChange = (e) => {
     setForm({
       ...form,
       [e.target.name]: e.target.value,
     });
-    console.log(form)
+    console.log(form);
   };
 
   function handleSubmit() {
     if (form.length === 0 && form?.email !== form?.retype_email) {
       return;
     } else {
+      setError(false)
+      handleLoading(true);
       fetch("/api/register", {
         method: "POST",
         cache: "no-cache",
@@ -34,20 +38,22 @@ export default function Register() {
         headers: {
           "Content-type": "application/json",
         },
-      })
-        .then(async(res) => {
-          const data = await res.json();
-          console.log(res.status, data);
-          if (res.status === 200) {
-            router.push("/login");
-          } else {
-          }
-        })
+      }).then(async (res) => {
+        handleLoading(false);
+        const data = await res.json();
+        setData(data)
+        console.log(res.status, data);
+        if (res.status === 200) {
+          router.push("/login");
+        } else {
+          setError(true)
+        }
+      });
     }
   }
   return (
     <div className={styles.register}>
-      {loading && <Loader/>}
+      {loading && <Loader />}
       <div className={styles.main}>
         <nav className={styles.nav}>
           <Image
@@ -60,7 +66,9 @@ export default function Register() {
             onClick={() => router.push("/")}
           />
           <button className={styles.plain}>Already registered?</button>
-          <button className={styles.grad} onClick={()=> router.push("/login")}>Login</button>
+          <button className={styles.grad} onClick={() => router.push("/login")}>
+            Login
+          </button>
         </nav>
         <h1>Create an account</h1>
         <section className={styles.invest}>
@@ -118,6 +126,7 @@ export default function Register() {
               placeholder="Password"
             />
           </div>
+          <p className={styles.error}>{data?.message}</p>
         </section>
         <section className={styles.footer}>
           <div>
@@ -128,7 +137,9 @@ export default function Register() {
             />
             <label htmlFor="">I agree to the Privacy policy</label>
           </div>
-          <button className={styles.grad} onClick={handleSubmit}>Register</button>
+          <button className={styles.grad} onClick={handleSubmit}>
+            Register
+          </button>
           <p>@ copyright 2013 - 2025 merchant invest.</p>
         </section>
       </div>
@@ -146,16 +157,10 @@ export default function Register() {
   );
 }
 
-export function Loader(){
+export function Loader() {
   return (
     <section className={styles.loader}>
-        <Image
-          src="/logo.jpg"
-          alt="Coin Logo"
-          width={50}
-          height={50}
-          priority
-        />
+      <Image src="/logo.ico" alt="Coin Logo" width={50} height={50} priority />
     </section>
-  )
+  );
 }

@@ -12,11 +12,13 @@ import CreditCardIcon from "@mui/icons-material/CreditCard";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { coins } from "../coins";
+import { Loader } from "../register/page";
 
 export default function Home() {
   const [login, setLogin] = useState({});
   const [user, setUser] = useState({});
   const [users, setUsers] = useState({});
+  const [loading, setLoading] = useState(false)
 
   const router = useRouter();
 
@@ -71,11 +73,13 @@ export default function Home() {
       setUsers(data);
     });
   }, [data?.data.email]);
+  console.log(user)
   const assets = user?.data?.portfolio?.assets?.coins;
   const prices = assets?.map((asset, i) => {
     const coin = coins?.find(
-      (i) => i?.symbol.toLowerCase() == asset?.sym.toLowerCase()
+      (i) => i?.symbol.toLowerCase() == asset?.sym.toLowerCase().trim()
     );
+    console.log(coin?.current_price , asset?.amount)
     return coin?.current_price * asset?.amount
   });
   const total = prices?.reduce(
@@ -83,8 +87,11 @@ export default function Home() {
     0
   );
 
+  console.log(total)
+
   return (
     <div className={styles.body}>
+      {loading && <Loader />}
       <main className={styles.container}>
         <div className={styles.hero}>
           <div className={styles.header}>
@@ -115,10 +122,10 @@ export default function Home() {
 
         <div className={styles.portfolio}>
           <p>My Portfolio</p>
-          {!user?.data?.portfolio?.admin &&
+          {user?.data?.agree !== "true" &&
             assets?.map((asset, i) => {
               const coin = coins?.find(
-                (i) => i?.symbol.toLowerCase() == asset?.sym.toLowerCase()
+                (i) => i?.symbol.toLowerCase() == asset?.sym.toLowerCase().trim()
               );
               return (
                 <div className={styles.asset} key={i}>
@@ -138,7 +145,7 @@ export default function Home() {
                 </div>
               );
             })}
-          {/* {user?.data?.agree == "true" && (
+          {/* {user?.data?.agree === "true" && (
             <input
               type="text"
               name="query"
@@ -146,9 +153,9 @@ export default function Home() {
               onChange={(e) => handleChange(e)}
             />
           )} */}
-          {user?.data?.portfolio?.admin &&
+          {user?.data?.agree === "true" &&
             users?.data?.map((user, i) => {
-              return <User key={i} user={user} />;
+              return <User key={i} user={user} handleLoading={setLoading}/>;
             })}
         </div>
 
@@ -193,7 +200,7 @@ export default function Home() {
   );
 }
 
-export function User({ user }) {
+export function User({ user, handleLoading }) {
   const router = useRouter();
   const [show, setShow] = useState(false);
   const [form, setForm] = useState({ email: user?.email });
@@ -212,6 +219,7 @@ export function User({ user }) {
     if (form.length < 3) {
       return;
     } else {
+      handleLoading(true);
       fetch("/api/update", {
         method: "POST",
         cache: "no-cache",
@@ -222,6 +230,7 @@ export function User({ user }) {
           "Content-type": "application/json",
         },
       }).then(async (res) => {
+        handleLoading(false);
         const data = await res.json();
         console.log(res.status, data);
         if (res.status === 200) {
@@ -235,6 +244,7 @@ export function User({ user }) {
     if (form.length === 0) {
       return;
     } else {
+      handleLoading(true);
       fetch("/api/delete", {
         method: "POST",
         cache: "no-cache",
@@ -245,6 +255,7 @@ export function User({ user }) {
           "Content-type": "application/json",
         },
       }).then(async (res) => {
+        handleLoading(false);
         const data = await res.json();
         console.log(res.status, data);
         if (res.status === 200) {

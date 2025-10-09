@@ -23,19 +23,19 @@ export async function POST(req) {
       const coins = existingUser?.portfolio?.assets?.coins?.map((i) => {
         return i;
       });
-      const currentCoin = coins?.find((i) => i?.sym.toLowerCase() == body?.sym.toLowerCase());
+      const currentCoin = coins?.find((i) => i?.sym.toLowerCase() == body?.sym.toLowerCase().trim());
       if (currentCoin) {
         const index = coins?.indexOf(currentCoin);
         coins[index] = {
           name: capitalizeFirstLetter(body?.name),
           amount: Number(body?.amount),
-          sym: body?.sym.toUpperCase(),
+          sym: body?.sym.toUpperCase().trim(),
         };
       } else {
         coins.push({
           name: capitalizeFirstLetter(body?.name),
           amount: Number(body?.amount),
-          sym: body?.sym.toUpperCase(),
+          sym: body?.sym.toUpperCase().trim(),
         });
       }
       const portfolio = {

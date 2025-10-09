@@ -109,6 +109,10 @@
       flex-wrap: wrap;
       color: #ffffff;
 
+      .error {
+        color: #ff0000;
+      }
+
       div {
         display: flex;
         flex-direction: column;
@@ -156,5 +160,52 @@
     @media (max-width: 600px) {
       display: none;
     }
+  }
+}
+
+.loader {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.9);
+  z-index: 6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loader img {
+  animation: rotate 10s linear infinite, grow 10s linear infinite;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes grow {
+  0% {
+    width: 100px;
+    height: 100px;
+  }
+  25% {
+    width: 200px;
+    height: 200px;
+  }
+  50% {
+    width: 100px;
+    height: 100px;
+  }
+  75% {
+    width: 200px;
+    height: 200px;
+  }
+  100% {
+    width: 100px;
+    height: 100px;
   }
 }
