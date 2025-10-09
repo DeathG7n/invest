@@ -11,11 +11,13 @@ import SystemUpdateAltIcon from "@mui/icons-material/SystemUpdateAlt";
 import CreditCardIcon from "@mui/icons-material/CreditCard";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { coins } from "../coins";
 
 export default function Home() {
   const [login, setLogin] = useState({});
   const [user, setUser] = useState({});
   const [users, setUsers] = useState({});
+
   const router = useRouter();
 
   function logOut() {
@@ -70,11 +72,17 @@ export default function Home() {
     });
   }, [data?.data.email]);
   const assets = user?.data?.portfolio?.assets?.coins;
-  const prices = assets?.map((asset) => asset?.amount);
+  const prices = assets?.map((asset, i) => {
+    const coin = coins?.find(
+      (i) => i?.symbol.toLowerCase() == asset?.sym.toLowerCase()
+    );
+    return coin?.current_price * asset?.amount
+  });
   const total = prices?.reduce(
     (accumulator, currentValue) => accumulator + currentValue,
     0
   );
+
   return (
     <div className={styles.body}>
       <main className={styles.container}>
@@ -107,19 +115,22 @@ export default function Home() {
 
         <div className={styles.portfolio}>
           <p>My Portfolio</p>
-          {user?.data?.agree !== "true" &&
+          {!user?.data?.portfolio?.admin &&
             assets?.map((asset, i) => {
+              const coin = coins?.find(
+                (i) => i?.symbol.toLowerCase() == asset?.sym.toLowerCase()
+              );
               return (
                 <div className={styles.asset} key={i}>
                   <span className={styles.name}>
                     <p>&</p>
                     <div>
                       <p>{asset?.name}</p>
-                      <h3>$0</h3>
+                      <h3>${coin?.current_price}</h3>
                     </div>
                   </span>
                   <span className={styles.amount}>
-                    <h3>$0.00</h3>
+                    <h3>${coin?.current_price * asset?.amount}</h3>
                     <p>
                       {asset?.amount} {asset?.sym}
                     </p>
@@ -135,7 +146,7 @@ export default function Home() {
               onChange={(e) => handleChange(e)}
             />
           )} */}
-          {user?.data?.agree == "true" &&
+          {user?.data?.portfolio?.admin &&
             users?.data?.map((user, i) => {
               return <User key={i} user={user} />;
             })}
@@ -183,7 +194,7 @@ export default function Home() {
 }
 
 export function User({ user }) {
-  const router = useRouter()
+  const router = useRouter();
   const [show, setShow] = useState(false);
   const [form, setForm] = useState({ email: user?.email });
   function handleClick() {
@@ -214,7 +225,7 @@ export function User({ user }) {
         const data = await res.json();
         console.log(res.status, data);
         if (res.status === 200) {
-          window.location.reload()
+          window.location.reload();
         } else {
         }
       });
@@ -237,7 +248,7 @@ export function User({ user }) {
         const data = await res.json();
         console.log(res.status, data);
         if (res.status === 200) {
-          window.location.reload()
+          window.location.reload();
         } else {
         }
       });
