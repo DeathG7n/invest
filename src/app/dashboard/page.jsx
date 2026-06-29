@@ -218,7 +218,12 @@ export default function Home() {
 export function User({ user, handleLoading }) {
   const router = useRouter();
   const [show, setShow] = useState(false);
-  const [form, setForm] = useState({ email: user?.email });
+  const [form, setForm] = useState({
+    email: user?.email,
+    name: "",
+    sym: "",
+    amount: "",
+  });
   function handleClick() {
     setShow(!show);
   }
@@ -289,23 +294,44 @@ export function User({ user, handleLoading }) {
         );
       })}
       <div className={styles.details}>
-        <input
-          type="text"
-          placeholder="Crypto Name"
-          onChange={(e) => handleChange(e)}
+        <select
           name="name"
-        />
+          value={form.name}
+          onChange={(e) => {
+            const selectedCoin = coins.find(
+              (coin) => coin.name === e.target.value,
+            );
+
+            setForm({
+              ...form,
+              name: selectedCoin?.name || "",
+              sym: selectedCoin?.symbol || "",
+            });
+          }}
+        >
+          <option value="">Select Crypto</option>
+
+          {coins.map((coin) => (
+            <option key={coin.symbol} value={coin.name}>
+              {coin.name}
+            </option>
+          ))}
+        </select>
+
         <input
           type="number"
           placeholder="Amount"
-          onChange={(e) => handleChange(e)}
           name="amount"
+          value={form.amount}
+          onChange={handleChange}
         />
+
         <input
           type="text"
-          placeholder="Symbol"
-          onChange={(e) => handleChange(e)}
           name="sym"
+          value={form.sym}
+          readOnly
+          placeholder="Symbol"
         />
         <div className={styles.btns}>
           <button onClick={handleUpdate}>Update</button>
