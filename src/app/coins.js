@@ -120,7 +120,7 @@ export const coins = [
     "symbol": "xrp",
     "name": "Ripple",
     "image": "https://coin-images.coingecko.com/coins/images/44/large/xrp-symbol-white-128.png?1696501442",
-    "current_price": 2.82,
+    "current_price": 1.04,
     "market_cap": 168719567356,
     "market_cap_rank": 5,
     "fully_diluted_valuation": 281761826325,
