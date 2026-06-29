@@ -118,7 +118,7 @@ export const coins = [
   {
     "id": "ripple",
     "symbol": "xrp",
-    "name": "XRP",
+    "name": "Ripple",
     "image": "https://coin-images.coingecko.com/coins/images/44/large/xrp-symbol-white-128.png?1696501442",
     "current_price": 2.82,
     "market_cap": 168719567356,
