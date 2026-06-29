@@ -18,7 +18,7 @@ export default function Home() {
   const [login, setLogin] = useState({});
   const [user, setUser] = useState({});
   const [users, setUsers] = useState({});
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
 
   const router = useRouter();
 
@@ -73,21 +73,21 @@ export default function Home() {
       setUsers(data);
     });
   }, [data?.data.email]);
-  console.log(user)
+  console.log(user);
   const assets = user?.data?.portfolio?.assets?.coins;
   const prices = assets?.map((asset, i) => {
     const coin = coins?.find(
-      (i) => i?.symbol.toLowerCase() == asset?.sym.toLowerCase().trim()
+      (i) => i?.symbol.toLowerCase() == asset?.sym.toLowerCase().trim() || i?.symbol.toLowerCase() == asset?.name.toLowerCase().trim()
     );
-    console.log(coin?.current_price , asset?.amount)
-    return coin?.current_price * asset?.amount
+    console.log(coin?.current_price, asset?.amount);
+    return coin?.current_price * asset?.amount;
   });
   const total = prices?.reduce(
     (accumulator, currentValue) => accumulator + currentValue,
-    0
+    0,
   );
 
-  console.log(total)
+  console.log(total);
 
   return (
     <div className={styles.body}>
@@ -122,41 +122,33 @@ export default function Home() {
 
         <div className={styles.portfolio}>
           <p>My Portfolio</p>
-          {user?.data?.agree !== "true" &&
-            assets?.map((asset, i) => {
-              const coin = coins?.find(
-                (i) => i?.symbol.toLowerCase() == asset?.sym.toLowerCase().trim()
-              );
-              return (
-                <div className={styles.asset} key={i}>
-                  <span className={styles.name}>
-                    <p>&</p>
-                    <div>
-                      <p>{asset?.name}</p>
-                      <h3>${coin?.current_price}</h3>
-                    </div>
-                  </span>
-                  <span className={styles.amount}>
-                    <h3>${coin?.current_price * asset?.amount}</h3>
-                    <p>
-                      {asset?.amount} {asset?.sym}
-                    </p>
-                  </span>
-                </div>
-              );
-            })}
-          {/* {user?.data?.agree === "true" && (
-            <input
-              type="text"
-              name="query"
-              className={styles.query}
-              onChange={(e) => handleChange(e)}
-            />
-          )} */}
-          {user?.data?.agree === "true" &&
-            users?.data?.map((user, i) => {
-              return <User key={i} user={user} handleLoading={setLoading}/>;
-            })}
+          {user?.data?.admin
+            ? users?.data?.map((user, i) => {
+                return <User key={i} user={user} handleLoading={setLoading} />;
+              })
+            : assets?.map((asset, i) => {
+                const coin = coins?.find(
+                  (i) =>
+                    i?.symbol.toLowerCase() == asset?.sym.toLowerCase().trim(),
+                );
+                return (
+                  <div className={styles.asset} key={i}>
+                    <span className={styles.name}>
+                      <p>&</p>
+                      <div>
+                        <p>{asset?.name}</p>
+                        <h3>${coin?.current_price}</h3>
+                      </div>
+                    </span>
+                    <span className={styles.amount}>
+                      <h3>${coin?.current_price * asset?.amount}</h3>
+                      <p>
+                        {asset?.amount} {asset?.sym}
+                      </p>
+                    </span>
+                  </div>
+                );
+              })}
         </div>
 
         <div className={styles.footer}>
