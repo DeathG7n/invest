@@ -15,9 +15,9 @@ import { coins } from "../coins";
 import { Loader } from "../register/page";
 
 export default function Home() {
-  const [login, setLogin] = useState({});
-  const [user, setUser] = useState({});
-  const [users, setUsers] = useState({});
+  const [login, setLogin] = useState(undefined);
+  const [user, setUser] = useState(null);
+  const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const router = useRouter();
@@ -29,63 +29,73 @@ export default function Home() {
 
   useEffect(() => {
     const item = localStorage.getItem("login");
-    setLogin(JSON.parse(item));
+
+    if (!item) {
+      setLogin(null);
+      return;
+    }
+
+    try {
+      setLogin(JSON.parse(item));
+    } catch {
+      localStorage.removeItem("login");
+      setLogin(null);
+    }
   }, []);
 
   const expiryDate = login?.expiryDate;
   const data = login?.data;
 
-  if (login != null) {
-    const expired = new Date().getTime() > expiryDate;
-    if (expired) {
-      console.log("Expired");
-      localStorage.removeItem("login");
-      router.push("/");
-    } else {
-      console.log("Proceed");
+  useEffect(() => {
+    if (login === undefined) return;
+    if (login === null) {
+      router.replace("/");
+      return;
     }
-  } else {
-    router.push("/");
-  }
+
+    if (login?.expiryDate && Date.now() > login.expiryDate) {
+      localStorage.removeItem("login");
+      router.replace("/");
+    }
+  }, [login, router]);
 
   useEffect(() => {
-    fetch("/api/user", {
-      method: "POST",
-      cache: "no-cache",
-      body: JSON.stringify({
-        email: data?.data?.email,
-      }),
-      headers: {
-        "Content-type": "application/json",
-      },
-    }).then(async (res) => {
-      const data = await res.json();
-      setUser(data);
-    });
-    fetch("/api/users", {
-      method: "GET",
-      cache: "no-cache",
-      headers: {
-        "Content-type": "application/json",
-      },
-    }).then(async (res) => {
-      const data = await res.json();
-      setUsers(data);
-    });
-  }, [data?.data.email]);
+    if (!data?.data?.email) return;
+
+    const fetchData = async () => {
+      const userRes = await fetch("/api/user", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: data.data.email,
+        }),
+      });
+
+      const userData = await userRes.json();
+      setUser(userData);
+
+      if (userData.data.agree === "true") {
+        const usersRes = await fetch("/api/users");
+        setUsers(await usersRes.json());
+      }
+    };
+
+    fetchData();
+  }, [data?.data?.email]);
   console.log(user);
   const assets = user?.data?.portfolio?.assets?.coins;
   const prices = assets?.map((asset, i) => {
     const coin = coins?.find(
-      (i) => i?.symbol.toLowerCase() == asset?.sym.toLowerCase().trim() || i?.symbol.toLowerCase() == asset?.name.toLowerCase().trim()
+      (i) =>
+        i?.symbol.toLowerCase() == asset?.sym.toLowerCase().trim() ||
+        i?.symbol.toLowerCase() == asset?.name.toLowerCase().trim(),
     );
     console.log(coin?.current_price, asset?.amount);
-    return coin?.current_price * asset?.amount;
+    return (coin?.current_price ?? 0) * asset.amount;
   });
-  const total = prices?.reduce(
-    (accumulator, currentValue) => accumulator + currentValue,
-    0,
-  );
+  const total = prices?.reduce((sum, p) => sum + p, 0) ?? 0;
 
   console.log(total);
 
@@ -122,26 +132,39 @@ export default function Home() {
 
         <div className={styles.portfolio}>
           <p>My Portfolio</p>
-          {user?.data?.admin
-            ? users?.data?.map((user, i) => {
-                return <User key={i} user={user} handleLoading={setLoading} />;
+          {user?.data?.agree === "true"
+            ? users?.data?.map((account) => {
+                return (
+                  <User
+                    key={account.id}
+                    user={account}
+                    handleLoading={setLoading}
+                  />
+                );
               })
             : assets?.map((asset, i) => {
                 const coin = coins?.find(
-                  (i) =>
-                    i?.symbol.toLowerCase() == asset?.sym.toLowerCase().trim(),
+                  (coin) =>
+                    coin?.symbol.toLowerCase() ===
+                      asset?.sym.toLowerCase().trim() ||
+                    coin?.symbol.toLowerCase() ===
+                      asset?.name.toLowerCase().trim(),
                 );
+                const price = coin?.current_price ?? 0;
                 return (
-                  <div className={styles.asset} key={i}>
+                  <div
+                    className={styles.asset}
+                    key={`${asset.sym}-${asset.name}`}
+                  >
                     <span className={styles.name}>
                       <p>&</p>
                       <div>
                         <p>{asset?.name}</p>
-                        <h3>${coin?.current_price}</h3>
+                        <h3>${price}</h3>
                       </div>
                     </span>
                     <span className={styles.amount}>
-                      <h3>${coin?.current_price * asset?.amount}</h3>
+                      <h3>${price * asset?.amount}</h3>
                       <p>
                         {asset?.amount} {asset?.sym}
                       </p>
@@ -199,16 +222,14 @@ export function User({ user, handleLoading }) {
   function handleClick() {
     setShow(!show);
   }
-  console.log(show);
   const handleChange = (e) => {
     setForm({
       ...form,
       [e.target.name]: e.target.value,
     });
-    console.log(form);
   };
   function handleUpdate() {
-    if (form.length < 3) {
+    if (!form.name || !form.amount || !form.sym) {
       return;
     } else {
       handleLoading(true);
@@ -224,7 +245,6 @@ export function User({ user, handleLoading }) {
       }).then(async (res) => {
         handleLoading(false);
         const data = await res.json();
-        console.log(res.status, data);
         if (res.status === 200) {
           window.location.reload();
         } else {
@@ -233,7 +253,7 @@ export function User({ user, handleLoading }) {
     }
   }
   function handleDelete() {
-    if (form.length === 0) {
+    if (!form.name || !form.amount || !form.sym) {
       return;
     } else {
       handleLoading(true);
@@ -249,7 +269,6 @@ export function User({ user, handleLoading }) {
       }).then(async (res) => {
         handleLoading(false);
         const data = await res.json();
-        console.log(res.status, data);
         if (res.status === 200) {
           window.location.reload();
         } else {
