@@ -117,7 +117,7 @@ export default function Home() {
           </div>
           <div className={styles.total}>
             <p>TOTAL BALANCE</p>
-            <h1 className={styles.balance}>${total}</h1>
+            <h1 className={styles.balance}>${truncate(String(total), 6)}</h1>
           </div>
 
           <div className={styles.actions}>
