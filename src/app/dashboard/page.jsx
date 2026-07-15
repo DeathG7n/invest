@@ -170,7 +170,7 @@ export default function Home() {
                       </div>
                     </span>
                     <span className={styles.amount}>
-                      <h3>${price * asset?.amount}</h3>
+                      <h3>${truncate(String(price * asset?.amount), 6)}</h3>
                       <p>
                         {asset?.amount} {asset?.sym}
                       </p>
