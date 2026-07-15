@@ -22,6 +22,12 @@ export default function Home() {
 
   const router = useRouter();
 
+  function truncate(str, maxLength) {
+  return str.length > maxLength
+    ? str.slice(0, maxLength) + "..."
+    : str;
+  }
+
   function logOut() {
     localStorage.removeItem("login");
     router.push("/login");
@@ -160,7 +166,7 @@ export default function Home() {
                       <p>&</p>
                       <div>
                         <p>{asset?.name}</p>
-                        <h3>${price}</h3>
+                        <h3>${truncate(String(price), 7)}</h3>
                       </div>
                     </span>
                     <span className={styles.amount}>
