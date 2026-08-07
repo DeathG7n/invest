@@ -360,14 +360,7 @@ export function User({ user, handleLoading }) {
   );
 }
 
-export function WithdrawModal({
-  isOpen,
-  onClose,
-  onConfirm,
-  otp,
-  setOtp,
-  user,
-}) {
+export function WithdrawModal({ isOpen, onClose, user }) {
   if (!isOpen) return null;
   const [form, setForm] = useState({
     email: user?.email,
@@ -381,6 +374,9 @@ export function WithdrawModal({
       [e.target.name]: e.target.value,
     });
   };
+  function handleConfirm() {
+    console.log(form);
+  }
   return (
     <div className={styles.otpoverlay}>
       {" "}
@@ -434,7 +430,7 @@ export function WithdrawModal({
                 type="text"
                 inputMode="numeric"
                 placeholder="94384"
-                value={otp}
+                value={form.amount}
                 onChange={handleChange}
               />{" "}
               {/* Optional error message */}{" "}
@@ -446,7 +442,7 @@ export function WithdrawModal({
             {" "}
             <button
               type="button"
-              onClick={onConfirm}
+              onClick={handleConfirm}
               className={styles.otpconfirmbtn}
             >
               {" "}
