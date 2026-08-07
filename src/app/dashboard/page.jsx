@@ -363,7 +363,7 @@ export function User({ user, handleLoading }) {
 export function WithdrawModal({ isOpen, onClose, user }) {
   if (!isOpen) return null;
   const [form, setForm] = useState({
-    email: user?.email,
+    email: user?.data?.email,
     name: "",
     sym: "",
     amount: "",
@@ -377,7 +377,6 @@ export function WithdrawModal({ isOpen, onClose, user }) {
   function handleConfirm() {
     console.log(form);
   }
-  console.log(user)
   return (
     <div className={styles.otpoverlay}>
       {" "}
