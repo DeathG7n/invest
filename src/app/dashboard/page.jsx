@@ -434,6 +434,7 @@ export function WithdrawModal({ isOpen, onClose, user }) {
                 type="text"
                 inputMode="numeric"
                 placeholder="94384"
+                name="amount"
                 value={form.amount}
                 onChange={handleChange}
               />{" "}
