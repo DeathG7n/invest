@@ -412,7 +412,11 @@ export function WithdrawModal({ isOpen, onClose, user }) {
               {" "}
               <option value="">Select Crypto</option>
               {coins.map((coin) => (
-                <option key={coin.symbol} value={coin.name}>
+                <option
+                  key={coin.symbol}
+                  value={coin.name}
+                  className={styles.otpinputcontaineroption}
+                >
                   {coin.name}
                 </option>
               ))}

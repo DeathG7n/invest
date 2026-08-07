@@ -280,7 +280,7 @@
 }
 
 /* OTP input */
-.otpinputcontainer input, option{
+.otpinputcontainer input{
   width: 100%;
   box-sizing: border-box;
 
@@ -310,6 +310,29 @@
   border-color: #1d357d;
 
   box-shadow: 0 0 0 3px rgba(29, 53, 125, 0.1);
+}
+
+/* OTP option */
+.otpinputcontaineroption{
+  width: 100%;
+  box-sizing: border-box;
+
+  padding: 12px 14px;
+
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+
+  background: #ffffff;
+
+  color: #111827;
+
+  font-size: 15px;
+
+  outline: none;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 /* Error message */
