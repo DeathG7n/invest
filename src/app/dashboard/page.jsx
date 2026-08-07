@@ -112,13 +112,13 @@ export default function Home() {
       {loading && <Loader />}
       {withdraw && (
         <WithdrawModal
-          isOpen={isOtpOpen}
-          onClose={() => setIsOtpOpen(false)}
-          onConfirm={() => {
-            console.log("OTP:", otp);
-          }}
-          otp={otp}
-          setOtp={setOtp}
+          // isOpen={isOtpOpen}
+          // onClose={() => setIsOtpOpen(false)}
+          // onConfirm={() => {
+          //   console.log("OTP:", otp);
+          // }}
+          // otp={otp}
+          // setOtp={setOtp}
         />
       )}
       <main className={styles.container}>
