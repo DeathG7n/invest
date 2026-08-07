@@ -377,6 +377,7 @@ export function WithdrawModal({ isOpen, onClose, user }) {
   function handleConfirm() {
     console.log(form);
   }
+  console.log(user)
   return (
     <div className={styles.otpoverlay}>
       {" "}
