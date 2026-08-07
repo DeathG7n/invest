@@ -199,3 +199,262 @@
     }
   }
 }
+
+
+.otpoverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.45);
+}
+
+/* Modal container */
+.otpmodal {
+  width: 100%;
+  max-width: 500px;
+
+  background: #ffffff;
+  border-radius: 16px;
+
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.18);
+
+  overflow: hidden;
+
+  animation: otpModalIn 0.2s ease-out;
+}
+
+/* Header */
+.otpheader {
+  padding: 24px 28px;
+
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.otpheader h2 {
+  margin: 0;
+
+  color: #111827;
+
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+/* Body */
+.otpbody {
+  padding: 24px 28px;
+}
+
+/* Form item */
+.otpformitem {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+
+  padding: 20px 0;
+
+  border-top: 1px solid #e5e7eb;
+}
+
+.otpformitem label {
+  width: 100%;
+  max-width: 280px;
+
+  padding-top: 10px;
+
+  color: #374151;
+
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* Input container */
+.otpinputcontainer {
+  width: 100%;
+}
+
+/* OTP input */
+.otpinputcontainer input {
+  width: 100%;
+  box-sizing: border-box;
+
+  padding: 12px 14px;
+
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+
+  background: #ffffff;
+
+  color: #111827;
+
+  font-size: 15px;
+
+  outline: none;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.otpinputcontainer input::placeholder {
+  color: #9ca3af;
+}
+
+.otpinputcontainer input:focus {
+  border-color: #1d357d;
+
+  box-shadow: 0 0 0 3px rgba(29, 53, 125, 0.1);
+}
+
+/* Error message */
+.otperror {
+  display: block;
+
+  margin-top: 6px;
+
+  color: #ef4444;
+
+  font-size: 12px;
+}
+
+/* Buttons */
+.otpactions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  padding-top: 8px;
+}
+
+/* Confirm button */
+.otpconfirmbtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  width: 100%;
+
+  padding: 14px 16px;
+
+  border: none;
+  border-radius: 12px;
+
+  background: #1d357d;
+  color: #ffffff;
+
+  font-size: 15px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+
+  transition:
+    background 0.2s ease,
+    transform 0.1s ease;
+}
+
+.otpconfirmbtn:hover {
+  background: #162a64;
+}
+
+.otpconfirmbtn:active {
+  background: #11204c;
+  transform: scale(0.99);
+}
+
+/* Cancel button */
+.otpcancelbtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  width: 100%;
+
+  padding: 14px 16px;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+
+  background: #ffffff;
+  color: #6b7280;
+
+  font-size: 15px;
+  font-weight: 500;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.otpcancelbtn:hover {
+  background: #f9fafb;
+}
+
+.otpcancelbtn:active {
+  background: #f3f4f6;
+}
+
+/* Icons */
+.checkicon {
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.closeicon {
+  color: #9ca3af;
+
+  font-size: 21px;
+  font-weight: 400;
+  line-height: 1;
+}
+
+/* Animation */
+@keyframes otpModalIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .otpoverlay {
+    padding: 16px;
+  }
+
+  .otpheader {
+    padding: 20px;
+  }
+
+  .otpbody {
+    padding: 20px;
+  }
+
+  .otpformitem {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .otpformitem label {
+    max-width: none;
+    padding-top: 0;
+  }
+}
+

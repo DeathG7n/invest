@@ -19,13 +19,12 @@ export default function Home() {
   const [user, setUser] = useState(null);
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [withdraw, setWithdraw] = useState(false);
 
   const router = useRouter();
 
   function truncate(str, maxLength) {
-  return str.length > maxLength
-    ? str.slice(0, maxLength) + "..."
-    : str;
+    return str.length > maxLength ? str.slice(0, maxLength) + "..." : str;
   }
 
   function logOut() {
@@ -104,10 +103,24 @@ export default function Home() {
   const total = prices?.reduce((sum, p) => sum + p, 0) ?? 0;
 
   console.log(total);
+  function handleWithdraw() {
+    setWithdraw(!withdraw);
+  }
 
   return (
     <div className={styles.body}>
       {loading && <Loader />}
+      {withdraw && (
+        <WithdrawModal
+          isOpen={isOtpOpen}
+          onClose={() => setIsOtpOpen(false)}
+          onConfirm={() => {
+            console.log("OTP:", otp);
+          }}
+          otp={otp}
+          setOtp={setOtp}
+        />
+      )}
       <main className={styles.container}>
         <div className={styles.hero}>
           <div className={styles.header}>
@@ -126,7 +139,7 @@ export default function Home() {
               <p>Buy</p>
             </div>
             <div>
-              <ArrowDownwardIcon />
+              <ArrowDownwardIcon onClick={() => handleWithdraw()} />
               <p>Withdraw</p>
             </div>
             <div>
@@ -344,6 +357,66 @@ export function User({ user, handleLoading }) {
           <button onClick={handleDelete}>Delete</button>
         </div>
       </div>
+    </div>
+  );
+}
+
+export function WithdrawModal({ isOpen, onClose, onConfirm, otp, setOtp }) {
+  if (!isOpen) return null;
+  return (
+    <div className={styles.otpoverlay}>
+      {" "}
+      <div className={styles.otpmodal}>
+        {" "}
+        {/* Header */}{" "}
+        <div className={styles.otpheader}>
+          {" "}
+          <h2>Enter One Time Password</h2>{" "}
+        </div>{" "}
+        {/* Content Body */}{" "}
+        <div className={styles.otpbody}>
+          {" "}
+          <div className={styles.otpformitem}>
+            {" "}
+            <label htmlFor="otp">Enter OTP code</label>{" "}
+            <div className={styles.otpinputcontainer}>
+              {" "}
+              <input
+                id="otp"
+                type="text"
+                inputMode="numeric"
+                maxLength={6}
+                placeholder="094384"
+                value={otp}
+                onChange={(e) => setOtp(e.target.value)}
+                autoComplete="one-time-code"
+              />{" "}
+              {/* Optional error message */}{" "}
+              {/* <span className="otp-error">Invalid OTP</span> */}{" "}
+            </div>{" "}
+          </div>{" "}
+          {/* Action Buttons */}{" "}
+          <div className={styles.otpactions}>
+            {" "}
+            <button
+              type="button"
+              onClick={onConfirm}
+              className={styles.otpconfirmbtn}
+            >
+              {" "}
+              <span className={styles.checkicon}>✓</span> Confirm Details{" "}
+            </button>{" "}
+            <button
+              type="button"
+              onClick={onClose}
+              className={styles.otpcancelbtn}
+            >
+              {" "}
+              <span className={styles.closeicon}>×</span> Cancel{" "}
+            </button>{" "}
+          </div>{" "}
+        </div>{" "}
+      </div>{" "}
     </div>
   );
 }
