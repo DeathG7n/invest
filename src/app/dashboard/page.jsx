@@ -113,6 +113,7 @@ export default function Home() {
       <WithdrawModal
         isOpen={withdraw}
         onClose={() => handleWithdraw()}
+        user={user}
         // onConfirm={() => {
         //   console.log("OTP:", otp);
         // }}
@@ -359,8 +360,27 @@ export function User({ user, handleLoading }) {
   );
 }
 
-export function WithdrawModal({ isOpen, onClose, onConfirm, otp, setOtp }) {
+export function WithdrawModal({
+  isOpen,
+  onClose,
+  onConfirm,
+  otp,
+  setOtp,
+  user,
+}) {
   if (!isOpen) return null;
+  const [form, setForm] = useState({
+    email: user?.email,
+    name: "",
+    sym: "",
+    amount: "",
+  });
+  const handleChange = (e) => {
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value,
+    });
+  };
   return (
     <div className={styles.otpoverlay}>
       {" "}
@@ -377,7 +397,22 @@ export function WithdrawModal({ isOpen, onClose, onConfirm, otp, setOtp }) {
           <div className={styles.otpformitem}>
             {" "}
             <label htmlFor="otp">Select Coin</label>{" "}
-            <select className={styles.otpinputcontainer}>
+            <select
+              className={styles.otpinputcontainer}
+              name="name"
+              value={form.name}
+              onChange={(e) => {
+                const selectedCoin = coins.find(
+                  (coin) => coin.name === e.target.value,
+                );
+
+                setForm({
+                  ...form,
+                  name: selectedCoin?.name || "",
+                  sym: selectedCoin?.symbol || "",
+                });
+              }}
+            >
               {" "}
               <option value="">Select Crypto</option>
               {coins.map((coin) => (
@@ -400,7 +435,7 @@ export function WithdrawModal({ isOpen, onClose, onConfirm, otp, setOtp }) {
                 inputMode="numeric"
                 placeholder="94384"
                 value={otp}
-                onChange={(e) => setOtp(e.target.value)}
+                onChange={handleChange}
               />{" "}
               {/* Optional error message */}{" "}
               {/* <span className="otp-error">Invalid OTP</span> */}{" "}
