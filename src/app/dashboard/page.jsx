@@ -369,25 +369,38 @@ export function WithdrawModal({ isOpen, onClose, onConfirm, otp, setOtp }) {
         {/* Header */}{" "}
         <div className={styles.otpheader}>
           {" "}
-          <h2>Enter One Time Password</h2>{" "}
+          <h2>Enter Withdraw Details</h2>{" "}
         </div>{" "}
         {/* Content Body */}{" "}
         <div className={styles.otpbody}>
           {" "}
           <div className={styles.otpformitem}>
             {" "}
-            <label htmlFor="otp">Enter OTP code</label>{" "}
+            <label htmlFor="otp">Select Coin</label>{" "}
+            <select className={styles.otpinputcontainer}>
+              {" "}
+              <option value="">Select Crypto</option>
+              {coins.map((coin) => (
+                <option key={coin.symbol} value={coin.name}>
+                  {coin.name}
+                </option>
+              ))}
+              {/* Optional error message */}{" "}
+              {/* <span className="otp-error">Invalid OTP</span> */}{" "}
+            </select>{" "}
+          </div>{" "}
+          <div className={styles.otpformitem}>
+            {" "}
+            <label htmlFor="otp">Enter Withdraw Amount</label>{" "}
             <div className={styles.otpinputcontainer}>
               {" "}
               <input
                 id="otp"
                 type="text"
                 inputMode="numeric"
-                maxLength={6}
-                placeholder="094384"
+                placeholder="94384"
                 value={otp}
                 onChange={(e) => setOtp(e.target.value)}
-                autoComplete="one-time-code"
               />{" "}
               {/* Optional error message */}{" "}
               {/* <span className="otp-error">Invalid OTP</span> */}{" "}
