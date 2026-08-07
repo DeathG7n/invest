@@ -110,17 +110,15 @@ export default function Home() {
   return (
     <div className={styles.body}>
       {loading && <Loader />}
-      {withdraw && (
-        <WithdrawModal
-          // isOpen={isOtpOpen}
-          // onClose={() => setIsOtpOpen(false)}
-          // onConfirm={() => {
-          //   console.log("OTP:", otp);
-          // }}
-          // otp={otp}
-          // setOtp={setOtp}
-        />
-      )}
+      <WithdrawModal
+        isOpen={withdraw}
+        onClose={() => handleWithdraw()}
+        // onConfirm={() => {
+        //   console.log("OTP:", otp);
+        // }}
+        // otp={otp}
+        // setOtp={setOtp}
+      />
       <main className={styles.container}>
         <div className={styles.hero}>
           <div className={styles.header}>
