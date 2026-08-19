@@ -539,6 +539,7 @@ export function LoginModal({ isOpen, onClose, onConfirm, user }) {
   };
   function handleConfirm() {
     console.log(form);
+    onClose()
     onConfirm()
   }
   return (
