@@ -20,6 +20,7 @@ export default function Home() {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
   const [withdraw, setWithdraw] = useState(false);
+  const [transfer, setTransfer] = useState(false);
 
   const router = useRouter();
 
@@ -107,6 +108,10 @@ export default function Home() {
     setWithdraw(!withdraw);
   }
 
+  function handleTransfer() {
+    setTransfer(!transfer);
+  }
+
   return (
     <div className={styles.body}>
       {loading && <Loader />}
@@ -114,11 +119,11 @@ export default function Home() {
         isOpen={withdraw}
         onClose={() => handleWithdraw()}
         user={user}
-        // onConfirm={() => {
-        //   console.log("OTP:", otp);
-        // }}
-        // otp={otp}
-        // setOtp={setOtp}
+      />
+      <TransferModal
+        isOpen={transfer}
+        onClose={() => handleTransfer()}
+        user={user}
       />
       <main className={styles.container}>
         <div className={styles.hero}>
@@ -138,11 +143,15 @@ export default function Home() {
               <p>Buy</p>
             </div>
             <div>
-              <ArrowDownwardIcon onClick={() => handleWithdraw()} />
+              <ArrowDownwardIcon
+                onClick={() => user?.data?.agree === "true" && handleWithdraw()}
+              />
               <p>Withdraw</p>
             </div>
             <div>
-              <MultipleStopIcon />
+              <MultipleStopIcon
+                onClick={() => user?.data?.agree === "true" && handleTransfer()}
+              />
               <p>Transfer</p>
             </div>
           </div>
@@ -150,7 +159,44 @@ export default function Home() {
 
         <div className={styles.portfolio}>
           <p>My Portfolio</p>
-          {user?.data?.agree === "true"
+          {user?.data?.agree === "true" &&
+            users?.data?.map((account) => {
+              return (
+                <User
+                  key={account.id}
+                  user={account}
+                  handleLoading={setLoading}
+                />
+              );
+            })}
+          {assets?.map((asset, i) => {
+            const coin = coins?.find(
+              (coin) =>
+                coin?.symbol.toLowerCase() ===
+                  asset?.sym.toLowerCase().trim() ||
+                coin?.symbol.toLowerCase() === asset?.name.toLowerCase().trim(),
+            );
+            const price = coin?.current_price ?? 0;
+            return (
+              <div className={styles.asset} key={`${asset.sym}-${asset.name}`}>
+                <span className={styles.name}>
+                  <p>&</p>
+                  <div>
+                    <p>{asset?.name}</p>
+                    <h3>${truncate(String(price), 7)}</h3>
+                  </div>
+                </span>
+                <span className={styles.amount}>
+                  <h3>${truncate(String(price * asset?.amount), 6)}</h3>
+                  <p>
+                    {asset?.amount} {asset?.sym}
+                  </p>
+                </span>
+              </div>
+            );
+          })}
+
+          {/* {user?.data?.agree === "true"
             ? users?.data?.map((account) => {
                 return (
                   <User
@@ -189,7 +235,7 @@ export default function Home() {
                     </span>
                   </div>
                 );
-              })}
+              })} */}
         </div>
 
         <div className={styles.footer}>
@@ -361,6 +407,114 @@ export function User({ user, handleLoading }) {
 }
 
 export function WithdrawModal({ isOpen, onClose, user }) {
+  if (!isOpen) return null;
+  const [form, setForm] = useState({
+    email: user?.data?.email,
+    name: "",
+    sym: "",
+    amount: "",
+  });
+  const handleChange = (e) => {
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value,
+    });
+  };
+  function handleConfirm() {
+    console.log(form);
+  }
+  return (
+    <div className={styles.otpoverlay}>
+      {" "}
+      <div className={styles.otpmodal}>
+        {" "}
+        {/* Header */}{" "}
+        <div className={styles.otpheader}>
+          {" "}
+          <h2>Enter Withdraw Details</h2>{" "}
+        </div>{" "}
+        {/* Content Body */}{" "}
+        <div className={styles.otpbody}>
+          {" "}
+          <div className={styles.otpformitem}>
+            {" "}
+            <label htmlFor="otp">Select Coin</label>{" "}
+            <select
+              className={styles.otpinputcontainer}
+              name="name"
+              value={form.name}
+              onChange={(e) => {
+                const selectedCoin = coins.find(
+                  (coin) => coin.name === e.target.value,
+                );
+
+                setForm({
+                  ...form,
+                  name: selectedCoin?.name || "",
+                  sym: selectedCoin?.symbol || "",
+                });
+              }}
+            >
+              {" "}
+              <option value="">Select Crypto</option>
+              {coins.map((coin) => (
+                <option
+                  key={coin.symbol}
+                  value={coin.name}
+                  className={styles.otpinputcontaineroption}
+                >
+                  {coin.name}
+                </option>
+              ))}
+              {/* Optional error message */}{" "}
+              {/* <span className="otp-error">Invalid OTP</span> */}{" "}
+            </select>{" "}
+          </div>{" "}
+          <div className={styles.otpformitem}>
+            {" "}
+            <label htmlFor="otp">Enter Withdraw Amount</label>{" "}
+            <div className={styles.otpinputcontainer}>
+              {" "}
+              <input
+                id="otp"
+                type="text"
+                inputMode="numeric"
+                placeholder="94384"
+                name="amount"
+                value={form.amount}
+                onChange={handleChange}
+              />{" "}
+              {/* Optional error message */}{" "}
+              {/* <span className="otp-error">Invalid OTP</span> */}{" "}
+            </div>{" "}
+          </div>{" "}
+          {/* Action Buttons */}{" "}
+          <div className={styles.otpactions}>
+            {" "}
+            <button
+              type="button"
+              onClick={handleConfirm}
+              className={styles.otpconfirmbtn}
+            >
+              {" "}
+              <span className={styles.checkicon}>✓</span> Confirm Details{" "}
+            </button>{" "}
+            <button
+              type="button"
+              onClick={onClose}
+              className={styles.otpcancelbtn}
+            >
+              {" "}
+              <span className={styles.closeicon}>×</span> Cancel{" "}
+            </button>{" "}
+          </div>{" "}
+        </div>{" "}
+      </div>{" "}
+    </div>
+  );
+}
+
+export function TransferModal({ isOpen, onClose, user }) {
   if (!isOpen) return null;
   const [form, setForm] = useState({
     email: user?.data?.email,
