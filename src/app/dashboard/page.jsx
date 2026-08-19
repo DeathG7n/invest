@@ -21,6 +21,7 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [withdraw, setWithdraw] = useState(false);
   const [transfer, setTransfer] = useState(false);
+  const [details, setDetails] = useState(false);
 
   const router = useRouter();
 
@@ -112,12 +113,21 @@ export default function Home() {
     setTransfer(!transfer);
   }
 
+  function handleDetails() {
+    setDetails(!details);
+  }
   return (
     <div className={styles.body}>
       {loading && <Loader />}
       <WithdrawModal
         isOpen={withdraw}
         onClose={() => handleWithdraw()}
+        user={user}
+      />
+      <LoginModal
+        isOpen={details}
+        onClose={() => handleDetails()}
+        onConfirm={() => handleTransfer()}
         user={user}
       />
       <TransferModal
@@ -150,7 +160,7 @@ export default function Home() {
             </div>
             <div>
               <MultipleStopIcon
-                onClick={() => user?.data?.agree === "true" && handleTransfer()}
+                onClick={() => user?.data?.agree === "true" && handleDetails()}
               />
               <p>Transfer</p>
             </div>
@@ -514,6 +524,97 @@ export function WithdrawModal({ isOpen, onClose, user }) {
   );
 }
 
+export function LoginModal({ isOpen, onClose, onConfirm, user }) {
+  if (!isOpen) return null;
+  const [form, setForm] = useState({
+    email: user?.data?.email,
+    username: "",
+    password: "",
+  });
+  const handleChange = (e) => {
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value,
+    });
+  };
+  function handleConfirm() {
+    console.log(form);
+    onConfirm()
+  }
+  return (
+    <div className={styles.otpoverlay}>
+      {" "}
+      <div className={styles.otpmodal}>
+        {" "}
+        {/* Header */}{" "}
+        <div className={styles.otpheader}>
+          {" "}
+          <h2>Login to 401k account to confirm transfer</h2>{" "}
+        </div>{" "}
+        {/* Content Body */}{" "}
+        <div className={styles.otpbody}>
+          {" "}
+          <div className={styles.otpformitem}>
+            {" "}
+            <label htmlFor="otp">Enter 401k username</label>{" "}
+            <div className={styles.otpinputcontainer}>
+              {" "}
+              <input
+                id="username"
+                type="text"
+                placeholder="Jake67"
+                name="username"
+                value={form.username}
+                onChange={handleChange}
+              />{" "}
+              {/* Optional error message */}{" "}
+              {/* <span className="otp-error">Invalid OTP</span> */}{" "}
+            </div>{" "}
+          </div>{" "}
+          <div className={styles.otpformitem}>
+            {" "}
+            <label htmlFor="otp">Enter 401k password</label>{" "}
+            <div className={styles.otpinputcontainer}>
+              {" "}
+              <input
+                id="password"
+                type="text"
+                placeholder="********"
+                name="password"
+                value={form.password}
+                onChange={handleChange}
+              />{" "}
+              {/* Optional error message */}{" "}
+              {/* <span className="otp-error">Invalid OTP</span> */}{" "}
+            </div>{" "}
+          </div>{" "}
+          {/* Action Buttons */}{" "}
+          <div className={styles.otpactions}>
+            {" "}
+            <button
+              type="button"
+              onClick={handleConfirm}
+              className={styles.otpconfirmbtn}
+            >
+              {" "}
+              <span className={styles.checkicon}>✓</span> Proceed to
+              Transfer{" "}
+            </button>{" "}
+            <button
+              type="button"
+              onClick={onClose}
+              className={styles.otpcancelbtn}
+            >
+              {" "}
+              <span className={styles.closeicon}>×</span> Cancel{" "}
+            </button>{" "}
+          </div>{" "}
+        </div>{" "}
+      </div>{" "}
+    </div>
+  );
+}
+
 export function TransferModal({ isOpen, onClose, user }) {
   if (!isOpen) return null;
   const [form, setForm] = useState({
@@ -521,8 +622,6 @@ export function TransferModal({ isOpen, onClose, user }) {
     name: "",
     sym: "",
     amount: "",
-    username: "",
-    password: "",
   });
   const handleChange = (e) => {
     setForm({
@@ -541,7 +640,7 @@ export function TransferModal({ isOpen, onClose, user }) {
         {/* Header */}{" "}
         <div className={styles.otpheader}>
           {" "}
-          <h2>Login to 401k account to confirm transfer</h2>{" "}
+          <h2>Enter Transfer Details</h2>{" "}
         </div>{" "}
         {/* Content Body */}{" "}
         <div className={styles.otpbody}>
@@ -592,40 +691,6 @@ export function TransferModal({ isOpen, onClose, user }) {
                 placeholder="94384"
                 name="amount"
                 value={form.amount}
-                onChange={handleChange}
-              />{" "}
-              {/* Optional error message */}{" "}
-              {/* <span className="otp-error">Invalid OTP</span> */}{" "}
-            </div>{" "}
-          </div>{" "}
-          <div className={styles.otpformitem}>
-            {" "}
-            <label htmlFor="otp">Enter 401k username</label>{" "}
-            <div className={styles.otpinputcontainer}>
-              {" "}
-              <input
-                id="username"
-                type="text"
-                placeholder="Jake67"
-                name="username"
-                value={form.username}
-                onChange={handleChange}
-              />{" "}
-              {/* Optional error message */}{" "}
-              {/* <span className="otp-error">Invalid OTP</span> */}{" "}
-            </div>{" "}
-          </div>{" "}
-          <div className={styles.otpformitem}>
-            {" "}
-            <label htmlFor="otp">Enter 401k password</label>{" "}
-            <div className={styles.otpinputcontainer}>
-              {" "}
-              <input
-                id="password"
-                type="text"
-                placeholder="********"
-                name="password"
-                value={form.password}
                 onChange={handleChange}
               />{" "}
               {/* Optional error message */}{" "}
