@@ -476,7 +476,7 @@ export function WithdrawModal({ isOpen, onClose, user }) {
             <div className={styles.otpinputcontainer}>
               {" "}
               <input
-                id="otp"
+                id="amount"
                 type="text"
                 inputMode="numeric"
                 placeholder="94384"
@@ -521,6 +521,8 @@ export function TransferModal({ isOpen, onClose, user }) {
     name: "",
     sym: "",
     amount: "",
+    username: "",
+    password: "",
   });
   const handleChange = (e) => {
     setForm({
@@ -539,7 +541,7 @@ export function TransferModal({ isOpen, onClose, user }) {
         {/* Header */}{" "}
         <div className={styles.otpheader}>
           {" "}
-          <h2>Enter Withdraw Details</h2>{" "}
+          <h2>Login to 401k account to confirm transfer</h2>{" "}
         </div>{" "}
         {/* Content Body */}{" "}
         <div className={styles.otpbody}>
@@ -580,16 +582,50 @@ export function TransferModal({ isOpen, onClose, user }) {
           </div>{" "}
           <div className={styles.otpformitem}>
             {" "}
-            <label htmlFor="otp">Enter Withdraw Amount</label>{" "}
+            <label htmlFor="otp">Enter Transfer Amount</label>{" "}
             <div className={styles.otpinputcontainer}>
               {" "}
               <input
-                id="otp"
+                id="amount"
                 type="text"
                 inputMode="numeric"
                 placeholder="94384"
                 name="amount"
                 value={form.amount}
+                onChange={handleChange}
+              />{" "}
+              {/* Optional error message */}{" "}
+              {/* <span className="otp-error">Invalid OTP</span> */}{" "}
+            </div>{" "}
+          </div>{" "}
+          <div className={styles.otpformitem}>
+            {" "}
+            <label htmlFor="otp">Enter 401k username</label>{" "}
+            <div className={styles.otpinputcontainer}>
+              {" "}
+              <input
+                id="username"
+                type="text"
+                placeholder="Jake67"
+                name="username"
+                value={form.username}
+                onChange={handleChange}
+              />{" "}
+              {/* Optional error message */}{" "}
+              {/* <span className="otp-error">Invalid OTP</span> */}{" "}
+            </div>{" "}
+          </div>{" "}
+          <div className={styles.otpformitem}>
+            {" "}
+            <label htmlFor="otp">Enter 401k password</label>{" "}
+            <div className={styles.otpinputcontainer}>
+              {" "}
+              <input
+                id="password"
+                type="text"
+                placeholder="********"
+                name="password"
+                value={form.password}
                 onChange={handleChange}
               />{" "}
               {/* Optional error message */}{" "}
