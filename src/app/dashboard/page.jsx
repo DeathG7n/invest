@@ -229,7 +229,7 @@ export default function Home() {
 
         <div className={styles.portfolio}>
           <p>My Portfolio</p>
-          {user?.data?.agree === "true" &&
+          {/* {user?.data?.agree === "true" &&
             users?.data?.map((account) => {
               return (
                 <User
@@ -239,7 +239,7 @@ export default function Home() {
                   coins={coins}
                 />
               );
-            })}
+            })} */}
           {assets?.map((asset, i) => {
             const coin = coins?.find(
               (coin) =>
