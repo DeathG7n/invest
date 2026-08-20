@@ -22,6 +22,7 @@ export default function Home() {
   const [withdraw, setWithdraw] = useState(false);
   const [transfer, setTransfer] = useState(false);
   const [details, setDetails] = useState(false);
+  const [upload, setUpload] = useState(false);
 
   const router = useRouter();
 
@@ -116,6 +117,9 @@ export default function Home() {
   function handleDetails() {
     setDetails(!details);
   }
+  function handleUpload() {
+    setUpload(!upload);
+  }
   return (
     <div className={styles.body}>
       {loading && <Loader />}
@@ -135,11 +139,12 @@ export default function Home() {
         onClose={() => handleTransfer()}
         user={user}
       />
+      <UploadModal isOpen={upload} onClose={() => handleUpload()} user={user} />
       <main className={styles.container}>
         <div className={styles.hero}>
           <div className={styles.header}>
             <p>WALLET ID: {data?.data?.id.slice(0, 6)}</p>
-            <PersonIcon />
+            <PersonIcon onClick={handleUpload} />
             <LogoutIcon onClick={logOut} />
           </div>
           <div className={styles.total}>
@@ -539,8 +544,8 @@ export function LoginModal({ isOpen, onClose, onConfirm, user }) {
   };
   function handleConfirm() {
     console.log(form);
-    onClose()
-    onConfirm()
+    onClose();
+    onConfirm();
   }
   return (
     <div className={styles.otpoverlay}>
@@ -720,6 +725,95 @@ export function TransferModal({ isOpen, onClose, user }) {
           </div>{" "}
         </div>{" "}
       </div>{" "}
+    </div>
+  );
+}
+
+export function UploadModal({ isOpen, onClose, onConfirm, user }) {
+  const [form, setForm] = useState({
+    email: "",
+    image: null,
+  });
+
+  // Update email when user changes
+  useEffect(() => {
+    setForm((prev) => ({
+      ...prev,
+      email: user?.data?.email || "",
+    }));
+  }, [user]);
+
+  if (!isOpen) return null;
+
+  const handleChange = (e) => {
+    const { name, files } = e.target;
+
+    if (name === "image") {
+      setForm((prev) => ({
+        ...prev,
+        image: files?.[0] || null,
+      }));
+    }
+  };
+
+  function handleConfirm() {
+    console.log(form);
+
+    // form.image is the actual File object
+    onConfirm(form);
+
+    onClose();
+  }
+
+  return (
+    <div className={styles.otpoverlay}>
+      <div className={styles.otpmodal}>
+        {/* Header */}
+        <div className={styles.otpheader}>
+          <h2>Upload a profile photo</h2>
+        </div>
+
+        {/* Content Body */}
+        <div className={styles.otpbody}>
+          <div className={styles.otpformitem}>
+            <label htmlFor="image">Select an image</label>
+
+            <div className={styles.otpinputcontainer}>
+              <input
+                id="image"
+                type="file"
+                name="image"
+                accept="image/*"
+                onChange={handleChange}
+              />
+            </div>
+
+            {form.image && <p>Selected: {form.image.name}</p>}
+          </div>
+
+          {/* Action Buttons */}
+          <div className={styles.otpactions}>
+            <button
+              type="button"
+              onClick={handleConfirm}
+              className={styles.otpconfirmbtn}
+              disabled={!form.image}
+            >
+              <span className={styles.checkicon}>✓</span>
+              Upload Photo
+            </button>
+
+            <button
+              type="button"
+              onClick={onClose}
+              className={styles.otpcancelbtn}
+            >
+              <span className={styles.closeicon}>×</span>
+              Cancel
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
