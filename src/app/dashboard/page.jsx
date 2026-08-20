@@ -236,6 +236,7 @@ export default function Home() {
                   key={account.id}
                   user={account}
                   handleLoading={setLoading}
+                  coins={coins}
                 />
               );
             })}
@@ -349,7 +350,7 @@ export default function Home() {
   );
 }
 
-export function User({ user, handleLoading }) {
+export function User({ user, handleLoading, coins }) {
   const router = useRouter();
   const [show, setShow] = useState(false);
   const [form, setForm] = useState({
