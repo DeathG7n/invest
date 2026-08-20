@@ -150,6 +150,7 @@ export default function Home() {
           .then(async (res) => {
             const data = await res.json();
             setCoins(...data.result);
+            console.log(coins)
             const newCoins = {
               updatedAt: now.getHours(),
               data: data.result,
