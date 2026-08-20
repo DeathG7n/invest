@@ -154,22 +154,19 @@ export default function Home() {
               updatedAt: now.getHours(),
               data: data.result,
             };
-            await fetch("/api/coins", {
-              method: "POST",
-              cache: "no-cache",
-              body: JSON.stringify({
-                ...newCoins,
-              }),
-              headers: {
-                "Content-type": "application/json",
-              },
-            }).then(async (res) => {
-              const data = await res.json();
-              if (res.status === 200) {
-                window.location.reload();
-              } else {
-              }
-            });
+            console.log(newCoins)
+            // await fetch("/api/coins", {
+            //   method: "POST",
+            //   cache: "no-cache",
+            //   body: JSON.stringify({
+            //     ...newCoins,
+            //   }),
+            //   headers: {
+            //     "Content-type": "application/json",
+            //   },
+            // }).then(async (res) => {
+            //   const data = await res.json();
+            // });
           })
           .catch((err) => console.error(err));
       }
