@@ -92,7 +92,7 @@ export default function Home() {
     };
 
     fetchData();
-  }, [data?.data?.email, coins]);
+  }, [data?.data?.email]);
   console.log(user, coins);
   const assets = user?.data?.portfolio?.assets?.coins;
   const prices = assets?.map((asset, i) => {
