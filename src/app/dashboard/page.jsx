@@ -11,7 +11,7 @@ import SystemUpdateAltIcon from "@mui/icons-material/SystemUpdateAlt";
 import CreditCardIcon from "@mui/icons-material/CreditCard";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { coins } from "../coins";
+// import { coins } from "../coins";
 import { Loader } from "../register/page";
 
 export default function Home() {
@@ -23,7 +23,7 @@ export default function Home() {
   const [transfer, setTransfer] = useState(false);
   const [details, setDetails] = useState(false);
   const [upload, setUpload] = useState(false);
-  // const [coins, setCoins] = useState({});
+  const [coins, setCoins] = useState({});
 
   const router = useRouter();
 
@@ -101,8 +101,8 @@ export default function Home() {
         i?.symbol.toLowerCase() == asset?.sym.toLowerCase().trim() ||
         i?.symbol.toLowerCase() == asset?.name.toLowerCase().trim(),
     );
-    console.log(coin?.current_price, asset?.amount);
-    return (coin?.current_price ?? 0) * asset.amount;
+    console.log(coin?.price, asset?.amount);
+    return (coin?.price ?? 0) * asset.amount;
   });
   const total = prices?.reduce((sum, p) => sum + p, 0) ?? 0;
 
@@ -136,7 +136,7 @@ export default function Home() {
       });
 
       const userData = await userRes.json();
-      //setCoins(userData?.data?.coins?.data);
+      setCoins(userData?.data?.coins?.data);
       const now = new Date();
       if (true) {
         const options = {
@@ -149,7 +149,7 @@ export default function Home() {
         await fetch("https://api.coinstats.app/v1/coins", options)
           .then(async (res) => {
             const data = await res.json();
-            //setCoins(data.result);
+            setCoins(data.result);
             const newCoins = {
               updatedAt: now.getHours(),
               data: data.result,
@@ -245,7 +245,7 @@ export default function Home() {
                   asset?.sym.toLowerCase().trim() ||
                 coin?.symbol.toLowerCase() === asset?.name.toLowerCase().trim(),
             );
-            const price = coin?.current_price ?? 0;
+            const price = coin?.price ?? 0;
             return (
               <div className={styles.asset} key={`${asset.sym}-${asset.name}`}>
                 <span className={styles.name}>
@@ -283,7 +283,7 @@ export default function Home() {
                     coin?.symbol.toLowerCase() ===
                       asset?.name.toLowerCase().trim(),
                 );
-                const price = coin?.current_price ?? 0;
+                const price = coin?.price ?? 0;
                 return (
                   <div
                     className={styles.asset}
