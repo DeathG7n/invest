@@ -23,7 +23,7 @@ export default function Home() {
   const [transfer, setTransfer] = useState(false);
   const [details, setDetails] = useState(false);
   const [upload, setUpload] = useState(false);
-  const [coins, setCoins] = useState({});
+  // const [coins, setCoins] = useState({});
 
   const router = useRouter();
 
