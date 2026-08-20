@@ -149,7 +149,7 @@ export default function Home() {
         await fetch("https://api.coinstats.app/v1/coins", options)
           .then(async (res) => {
             const data = await res.json();
-            setCoins(data.result);
+            setCoins(...data.result);
             const newCoins = {
               updatedAt: now.getHours(),
               data: data.result,
