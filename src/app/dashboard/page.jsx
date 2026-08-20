@@ -11,7 +11,7 @@ import SystemUpdateAltIcon from "@mui/icons-material/SystemUpdateAlt";
 import CreditCardIcon from "@mui/icons-material/CreditCard";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-// import { coins } from "../coins";
+import { coins } from "../coins";
 import { Loader } from "../register/page";
 
 export default function Home() {
@@ -23,7 +23,7 @@ export default function Home() {
   const [transfer, setTransfer] = useState(false);
   const [details, setDetails] = useState(false);
   const [upload, setUpload] = useState(false);
-  const [coins, setCoins] = useState({});
+  const [coins, setCoins] = useState(coins);
 
   const router = useRouter();
 
@@ -92,7 +92,7 @@ export default function Home() {
     };
 
     fetchData();
-  }, [data?.data?.email]);
+  }, [data?.data?.email, coins]);
   console.log(user, coins);
   const assets = user?.data?.portfolio?.assets?.coins;
   const prices = assets?.map((asset, i) => {
@@ -154,7 +154,7 @@ export default function Home() {
               updatedAt: now.getHours(),
               data: data.result,
             };
-            console.log(newCoins)
+            console.log(newCoins);
             // await fetch("/api/coins", {
             //   method: "POST",
             //   cache: "no-cache",
