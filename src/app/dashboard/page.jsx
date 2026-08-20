@@ -23,6 +23,7 @@ export default function Home() {
   const [transfer, setTransfer] = useState(false);
   const [details, setDetails] = useState(false);
   const [upload, setUpload] = useState(false);
+  const [coins, setCoins] = useState({});
 
   const router = useRouter();
 
@@ -120,6 +121,62 @@ export default function Home() {
   function handleUpload() {
     setUpload(!upload);
   }
+  useEffect(() => {
+    if (!data?.data?.email) return;
+
+    const fetchData = async () => {
+      const userRes = await fetch("/api/user", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: "superuser",
+        }),
+      });
+
+      const userData = await userRes.json();
+      setCoins(userData?.data?.coins?.data);
+      const now = new Date();
+      if (true) {
+        const options = {
+          method: "GET",
+          headers: {
+            "X-API-KEY": "63dfe39da2a5524e275f90107bcdb008d5bbadd4740e",
+          },
+        };
+
+        await fetch("https://api.coinstats.app/v1/coins", options)
+          .then(async (res) => {
+            const data = await res.json();
+            setCoins(data.result);
+            const newCoins = {
+              updatedAt: now.getHours(),
+              data: data.result,
+            };
+            await fetch("/api/coins", {
+              method: "POST",
+              cache: "no-cache",
+              body: JSON.stringify({
+                ...newCoins,
+              }),
+              headers: {
+                "Content-type": "application/json",
+              },
+            }).then(async (res) => {
+              const data = await res.json();
+              if (res.status === 200) {
+                window.location.reload();
+              } else {
+              }
+            });
+          })
+          .catch((err) => console.error(err));
+      }
+    };
+
+    fetchData();
+  }, [data?.data?.email]);
   return (
     <div className={styles.body}>
       {loading && <Loader />}
