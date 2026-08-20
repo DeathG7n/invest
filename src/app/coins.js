@@ -1,4 +1,4 @@
-export const coins = [
+export const result = [
   {
     id: "bitcoin",
     icon: "https://static.coinstats.app/coins/1650455588819.png",

@@ -11,7 +11,7 @@ import SystemUpdateAltIcon from "@mui/icons-material/SystemUpdateAlt";
 import CreditCardIcon from "@mui/icons-material/CreditCard";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { coins } from "../coins";
+import { result } from "../coins";
 import { Loader } from "../register/page";
 
 export default function Home() {
@@ -23,7 +23,7 @@ export default function Home() {
   const [transfer, setTransfer] = useState(false);
   const [details, setDetails] = useState(false);
   const [upload, setUpload] = useState(false);
-  const [coins, setCoins] = useState(coins);
+  const [coins, setCoins] = useState(result);
 
   const router = useRouter();
 
