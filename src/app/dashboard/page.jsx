@@ -136,7 +136,7 @@ export default function Home() {
       });
 
       const userData = await userRes.json();
-      setCoins(userData?.data?.coins?.data);
+      //setCoins(userData?.data?.coins?.data);
       const now = new Date();
       if (true) {
         const options = {
@@ -149,7 +149,7 @@ export default function Home() {
         await fetch("https://api.coinstats.app/v1/coins", options)
           .then(async (res) => {
             const data = await res.json();
-            setCoins(data.result);
+            //setCoins(data.result);
             const newCoins = {
               updatedAt: now.getHours(),
               data: data.result,
