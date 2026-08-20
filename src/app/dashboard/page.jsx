@@ -787,8 +787,6 @@ export function UploadModal({ isOpen, onClose, onConfirm, user }) {
                 onChange={handleChange}
               />
             </div>
-
-            {form.image && <p>Selected: {form.image.name}</p>}
           </div>
 
           {/* Action Buttons */}
