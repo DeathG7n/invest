@@ -150,7 +150,7 @@ export default function Home() {
           .then(async (res) => {
             const data = await res.json();
             setCoins(...data.result);
-            console.log(coins)
+            console.log(coins);
             const newCoins = {
               updatedAt: now.getHours(),
               data: data.result,
@@ -477,7 +477,7 @@ export function User({ user, handleLoading, coins }) {
   );
 }
 
-export function WithdrawModal({ isOpen, onClose, user }) {
+export function WithdrawModal({ isOpen, onClose, user, coins }) {
   if (!isOpen) return null;
   const [form, setForm] = useState({
     email: user?.data?.email,
@@ -677,7 +677,7 @@ export function LoginModal({ isOpen, onClose, onConfirm, user }) {
   );
 }
 
-export function TransferModal({ isOpen, onClose, user }) {
+export function TransferModal({ isOpen, onClose, user, coins }) {
   if (!isOpen) return null;
   const [form, setForm] = useState({
     email: user?.data?.email,
