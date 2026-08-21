@@ -136,9 +136,9 @@ export default function Home() {
       });
 
       const userData = await userRes.json();
-      //setCoins(userData?.data?.coins?.data);
+      setCoins(userData?.data?.portfolio?.prices.data);
       const now = new Date();
-      if (true) {
+      if (now.getHours() !== userData?.data?.portfolio?.prices.updatedAt) {
         const options = {
           method: "GET",
           headers: {
