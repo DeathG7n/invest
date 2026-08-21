@@ -996,6 +996,7 @@ export function UploadModal({ isOpen, onClose, user }) {
         },
       }).then(async (res) => {
         const data = await res.json();
+        console.log(data);
         if (res.status === 200) {
           window.location.reload();
         } else {

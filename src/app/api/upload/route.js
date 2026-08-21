@@ -32,14 +32,14 @@ export async function POST(req) {
     } else {
       return NextResponse.json(
         { message: "User doesn't exist" },
-        { status: 400 }
+        { status: 400 },
       );
     }
   } catch (err) {
     console.error(err);
     return NextResponse.json(
       { message: "Internal Server Error", error: err.message },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
