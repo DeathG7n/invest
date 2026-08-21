@@ -599,10 +599,10 @@ export function WithdrawModal({ isOpen, onClose, user, coins, handleLoading }) {
             <div className={styles.otpinputcontainer}>
               {" "}
               <input
-                id="amount"
+                id="address"
                 type="text"
                 placeholder="2fvbnfde7y8ydfb8iouiijnfjwuij89yiu489jr4"
-                name="amount"
+                name="address"
                 value={form.address}
                 onChange={handleChange}
               />{" "}
