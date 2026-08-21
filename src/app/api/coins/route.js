@@ -28,7 +28,7 @@ export async function POST(req) {
       const portfolio = {
         prices : newCoins,
         assets: {
-          coins: existingUser.portfolio.coins,
+          coins: existingUser.portfolio.assets.coins,
         },
       };
       await prisma.user.update({

