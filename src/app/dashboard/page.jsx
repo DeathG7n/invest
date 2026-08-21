@@ -989,7 +989,7 @@ export function UploadModal({ isOpen, onClose, user }) {
         method: "POST",
         cache: "no-cache",
         body: JSON.stringify({
-          ...form,
+          ...updatedForm,
         }),
         headers: {
           "Content-type": "application/json",
