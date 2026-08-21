@@ -136,10 +136,9 @@ export default function Home() {
         }),
       });
 
-      const userData = await userRes.json().then((res) => {
-        res.json();
-        setCoins(userData?.data?.portfolio?.prices.data);
-      });
+      const userData = await userRes.json();
+
+      setCoins(userData?.data?.portfolio?.prices?.data);
 
       const now = new Date();
       if (now.getHours() !== userData?.data?.portfolio?.prices.updatedAt) {
@@ -155,12 +154,12 @@ export default function Home() {
             await fetch("https://api.coinstats.app/v1/coins", options)
               .then(async (res) => {
                 const data = await res.json();
-                setCoins([...data.result, kaito]);
                 const newCoins = {
                   updatedAt: now.getHours(),
-                  data: coins,
+                  data: [...data.result, kaito],
                 };
-                console.log(newCoins);
+
+                setCoins(newCoins.data);
                 await fetch("/api/coins", {
                   method: "POST",
                   cache: "no-cache",
@@ -936,7 +935,7 @@ export function UploadModal({ isOpen, onClose, user }) {
       const reader = new FileReader();
 
       reader.onload = (e) => {
-        const img = new Image();
+        const img = new window.Image();
 
         img.onload = () => {
           const canvas = document.createElement("canvas");
