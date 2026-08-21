@@ -1415,4 +1415,38 @@ export const result = [
     allTimeLow: 0.148183,
     slug: "chainlink",
   },
+  {
+    "id": "kaito",
+    "icon": "https://static.coinstats.app/coins/kaito9SF.png",
+    "name": "KAITO",
+    "symbol": "KAITO",
+    "rank": 412,
+    "price": 0.3473352058013624,
+    "priceBtc": 0.000004713009462472911,
+    "volume": 33590322,
+    "marketCap": 83849693,
+    "availableSupply": 241388889,
+    "totalSupply": 1000000000,
+    "fullyDilutedValuation": 347363515,
+    "priceChange1h": 0.2,
+    "priceChange1d": 2.3,
+    "priceChange1w": -19.1,
+    "priceChange1m": 0,
+    "websiteUrl": "https://yaps.kaito.ai/",
+    "twitterUrl": "https://twitter.com/kaitoai",
+    "contractAddress": "0x98d0baa52b2d063e780de12f615f963fe8537553",
+    "contractAddresses": [
+        {
+            "blockchain": "base",
+            "contractAddress": "0x98d0baa52b2d063e780de12f615f963fe8537553"
+        }
+    ],
+    "decimals": 18,
+    "explorers": [
+        "https://basescan.org/token/0x98d0baa52b2D063E780DE12F615f963Fe8537553"
+    ],
+    "allTimeHigh": 2.88,
+    "allTimeLow": 0.275928,
+    "slug": "kaito"
+}
 ];
