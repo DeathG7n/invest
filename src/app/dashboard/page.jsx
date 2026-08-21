@@ -882,7 +882,7 @@ export function TransferModal({ isOpen, onClose, user, coins, handleLoading }) {
   );
 }
 
-export function UploadModal({ isOpen, onClose, user }) {
+export function UploadModal({ isOpen, onClose, user, handleLoading }) {
   const [form, setForm] = useState({
     email: "",
     image: null,
@@ -947,10 +947,7 @@ export function UploadModal({ isOpen, onClose, user }) {
 
           ctx.drawImage(img, 0, 0, width, height);
 
-          const compressedBase64 = canvas.toDataURL(
-            "image/webp",
-            0.7
-          );
+          const compressedBase64 = canvas.toDataURL("image/webp", 0.7);
 
           resolve(compressedBase64);
         };
@@ -985,8 +982,8 @@ export function UploadModal({ isOpen, onClose, user }) {
       };
 
       console.log(updatedForm);
-
-      fetch("/api/upload", {
+      handleLoading(true);
+      await fetch("/api/upload", {
         method: "POST",
         cache: "no-cache",
         body: JSON.stringify({
@@ -1021,9 +1018,7 @@ export function UploadModal({ isOpen, onClose, user }) {
 
         <div className={styles.otpbody}>
           <div className={styles.otpformitem}>
-            <label htmlFor="image">
-              Select an image
-            </label>
+            <label htmlFor="image">Select an image</label>
 
             <div className={styles.otpinputcontainer}>
               <input
