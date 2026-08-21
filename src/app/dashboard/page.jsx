@@ -882,8 +882,6 @@ export function TransferModal({ isOpen, onClose, user, coins, handleLoading }) {
   );
 }
 
-import { useEffect, useState } from "react";
-
 export function UploadModal({ isOpen, onClose, onConfirm, user }) {
   const [form, setForm] = useState({
     email: "",
