@@ -672,10 +672,7 @@ export function LoginModal({
       }).then(async (res) => {
         handleLoading(false);
         const data = await res.json();
-        if (res.status === 200) {
-          window.location.reload();
-        } else {
-        }
+       
       });
     }
     onClose();
