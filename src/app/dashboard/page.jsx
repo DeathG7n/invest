@@ -672,7 +672,6 @@ export function LoginModal({
       }).then(async (res) => {
         handleLoading(false);
         const data = await res.json();
-       
       });
     }
     onClose();
@@ -715,7 +714,7 @@ export function LoginModal({
               {" "}
               <input
                 id="password"
-                type="text"
+                type="password"
                 placeholder="********"
                 name="password"
                 value={form.password}
@@ -839,14 +838,16 @@ export function TransferModal({ isOpen, onClose, user, coins, handleLoading }) {
           </div>{" "}
           <div className={styles.otpformitem}>
             {" "}
-            <label htmlFor="otp">Enter Transfer Amount</label>{" "}
+            <label htmlFor="otp">
+              Enter {form.sym || "Crypto"} Amount
+            </label>{" "}
             <div className={styles.otpinputcontainer}>
               {" "}
               <input
                 id="amount"
                 type="text"
                 inputMode="numeric"
-                placeholder="94384"
+                placeholder={`Minimum : 2000 ${form.sym}`}
                 name="amount"
                 value={form.amount}
                 onChange={handleChange}
