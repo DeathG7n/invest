@@ -13,6 +13,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { result } from "../coins";
 import { Loader } from "../register/page";
+import Image from "next/image";
 
 export default function Home() {
   const [login, setLogin] = useState(undefined);
@@ -211,7 +212,19 @@ export default function Home() {
         <div className={styles.hero}>
           <div className={styles.header}>
             <p>WALLET ID: {data?.data?.id.slice(0, 6)}</p>
-            <PersonIcon onClick={handleUpload} />
+            {user?.data?.image ? (
+              <Image
+                src={user?.data?.image}
+                alt="User Image"
+                width={40}
+                height={40}
+                className={styles.userImage}
+                onClick={handleUpload}
+              />
+            ) : (
+              <PersonIcon onClick={handleUpload} />
+            )}
+
             <LogoutIcon onClick={logOut} />
           </div>
           <div className={styles.total}>
