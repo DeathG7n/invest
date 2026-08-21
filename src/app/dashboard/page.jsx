@@ -882,7 +882,7 @@ export function TransferModal({ isOpen, onClose, user, coins, handleLoading }) {
   );
 }
 
-export function UploadModal({ isOpen, onClose, user, handleLoading }) {
+export function UploadModal({ isOpen, onClose, user }) {
   const [form, setForm] = useState({
     email: "",
     image: null,
@@ -982,7 +982,6 @@ export function UploadModal({ isOpen, onClose, user, handleLoading }) {
       };
 
       console.log(updatedForm);
-      handleLoading(true);
       await fetch("/api/upload", {
         method: "POST",
         cache: "no-cache",
@@ -993,7 +992,6 @@ export function UploadModal({ isOpen, onClose, user, handleLoading }) {
           "Content-type": "application/json",
         },
       }).then(async (res) => {
-        handleLoading(false);
         const data = await res.json();
         if (res.status === 200) {
           window.location.reload();
