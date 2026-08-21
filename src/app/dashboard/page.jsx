@@ -882,13 +882,16 @@ export function TransferModal({ isOpen, onClose, user, coins, handleLoading }) {
   );
 }
 
+import { useEffect, useState } from "react";
+
 export function UploadModal({ isOpen, onClose, onConfirm, user }) {
   const [form, setForm] = useState({
     email: "",
     image: null,
   });
 
-  // Update email when user changes
+  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     setForm((prev) => ({
       ...prev,
@@ -909,27 +912,105 @@ export function UploadModal({ isOpen, onClose, onConfirm, user }) {
     }
   };
 
-  function handleConfirm() {
-    console.log(form);
+  const fileToBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      if (!file.type.startsWith("image/")) {
+        reject(new Error("Only image files are supported"));
+        return;
+      }
 
-    // form.image is the actual File object
-    onConfirm(form);
+      const reader = new FileReader();
 
-    onClose();
-  }
+      reader.onload = (e) => {
+        const img = new Image();
+
+        img.onload = () => {
+          const canvas = document.createElement("canvas");
+          const ctx = canvas.getContext("2d");
+
+          if (!ctx) {
+            reject(new Error("Could not get canvas context"));
+            return;
+          }
+
+          const MAX_WIDTH = 800;
+
+          let width = img.width;
+          let height = img.height;
+
+          if (width > MAX_WIDTH) {
+            const ratio = MAX_WIDTH / width;
+            width = MAX_WIDTH;
+            height = height * ratio;
+          }
+
+          canvas.width = width;
+          canvas.height = height;
+
+          ctx.drawImage(img, 0, 0, width, height);
+
+          const compressedBase64 = canvas.toDataURL(
+            "image/webp",
+            0.7
+          );
+
+          resolve(compressedBase64);
+        };
+
+        img.onerror = () => {
+          reject(new Error("Failed to load image"));
+        };
+
+        img.src = e.target.result;
+      };
+
+      reader.onerror = () => {
+        reject(new Error("Failed to read file"));
+      };
+
+      reader.readAsDataURL(file);
+    });
+  };
+
+  const handleConfirm = async () => {
+    if (!form.image) return;
+
+    try {
+      setLoading(true);
+
+      // Convert and compress image
+      const base64Image = await fileToBase64(form.image);
+
+      const updatedForm = {
+        email: form.email,
+        image: base64Image,
+      };
+
+      console.log(updatedForm);
+
+      // Send Base64 image to parent
+      onConfirm(updatedForm);
+
+      onClose();
+    } catch (error) {
+      console.error("Image conversion failed:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className={styles.otpoverlay}>
       <div className={styles.otpmodal}>
-        {/* Header */}
         <div className={styles.otpheader}>
           <h2>Upload a profile photo</h2>
         </div>
 
-        {/* Content Body */}
         <div className={styles.otpbody}>
           <div className={styles.otpformitem}>
-            <label htmlFor="image">Select an image</label>
+            <label htmlFor="image">
+              Select an image
+            </label>
 
             <div className={styles.otpinputcontainer}>
               <input
@@ -942,22 +1023,23 @@ export function UploadModal({ isOpen, onClose, onConfirm, user }) {
             </div>
           </div>
 
-          {/* Action Buttons */}
           <div className={styles.otpactions}>
             <button
               type="button"
               onClick={handleConfirm}
               className={styles.otpconfirmbtn}
-              disabled={!form.image}
+              disabled={!form.image || loading}
             >
               <span className={styles.checkicon}>✓</span>
-              Upload Photo
+
+              {loading ? "Processing..." : "Upload Photo"}
             </button>
 
             <button
               type="button"
               onClick={onClose}
               className={styles.otpcancelbtn}
+              disabled={loading}
             >
               <span className={styles.closeicon}>×</span>
               Cancel
