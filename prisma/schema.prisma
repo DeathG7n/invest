@@ -19,5 +19,5 @@ model user {
   password String
   agree String
   portfolio Json
-  coins Json
+  coins Json[]
 }

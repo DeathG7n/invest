@@ -12,6 +12,7 @@ function capitalizeFirstLetter(str) {
 
 export async function POST(req) {
   const body = await req.json();
+  console.log(body)
   try {
     const existingUser = await prisma.user.findFirst({
       where: {
