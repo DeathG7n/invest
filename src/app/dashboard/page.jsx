@@ -138,39 +138,42 @@ export default function Home() {
       const userData = await userRes.json();
       setCoins(userData?.data?.portfolio?.prices.data);
       const now = new Date();
-      if (now.getHours() !== userData?.data?.portfolio?.prices.updatedAt) {
+      if (true) {
         const options = {
           method: "GET",
           headers: {
             "X-API-KEY": "63dfe39da2a5524e275f90107bcdb008d5bbadd4740e",
           },
         };
-
-        await fetch("https://api.coinstats.app/v1/coins", options)
-          .then(async (res) => {
-            const data = await res.json();
-            setCoins(data.result);
-            console.log(coins);
-            const newCoins = {
-              updatedAt: now.getHours(),
-              data: data.result,
-            };
-            console.log(newCoins);
-            await fetch("/api/coins", {
-              method: "POST",
-              cache: "no-cache",
-              body: JSON.stringify({
-                ...newCoins,
-              }),
-              headers: {
-                "Content-type": "application/json",
-              },
-            }).then(async (res) => {
-              const data = await res.json();
-              console.log(data)
-            });
-          })
-          .catch((err) => console.error(err));
+        await fetch("https://api.coinstats.app/v1/coins/kaito", options).then(
+          async (res) => {
+            const kaito = await res.json();
+            await fetch("https://api.coinstats.app/v1/coins", options)
+              .then(async (res) => {
+                const data = await res.json();
+                setCoins([...data.result, kaito]);
+                const newCoins = {
+                  updatedAt: now.getHours(),
+                  data: coins,
+                };
+                console.log(newCoins);
+                await fetch("/api/coins", {
+                  method: "POST",
+                  cache: "no-cache",
+                  body: JSON.stringify({
+                    ...newCoins,
+                  }),
+                  headers: {
+                    "Content-type": "application/json",
+                  },
+                }).then(async (res) => {
+                  const data = await res.json();
+                  console.log(data);
+                });
+              })
+              .catch((err) => console.error(err));
+          },
+        );
       }
     };
 
