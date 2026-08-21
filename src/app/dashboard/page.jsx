@@ -99,8 +99,8 @@ export default function Home() {
   const prices = assets?.map((asset, i) => {
     const coin = coins?.find(
       (i) =>
-        i?.symbol.toLowerCase() == asset?.sym.toLowerCase().trim() ||
-        i?.symbol.toLowerCase() == asset?.name.toLowerCase().trim(),
+        i?.symbol?.toLowerCase() == asset?.sym?.toLowerCase().trim() ||
+        i?.symbol?.toLowerCase() == asset?.name?.toLowerCase().trim(),
     );
     console.log(coin?.price, asset?.amount);
     return (coin?.price ?? 0) * asset.amount;
@@ -250,9 +250,9 @@ export default function Home() {
           {assets?.map((asset, i) => {
             const coin = coins?.find(
               (coin) =>
-                coin?.symbol.toLowerCase() ===
-                  asset?.sym.toLowerCase().trim() ||
-                coin?.symbol.toLowerCase() === asset?.name.toLowerCase().trim(),
+                coin?.symbol?.toLowerCase() ===
+                  asset?.sym?.toLowerCase().trim() ||
+                coin?.symbol?.toLowerCase() === asset?.name?.toLowerCase().trim(),
             );
             const price = coin?.price ?? 0;
             return (
