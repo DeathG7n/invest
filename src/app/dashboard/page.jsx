@@ -882,7 +882,7 @@ export function TransferModal({ isOpen, onClose, user, coins, handleLoading }) {
   );
 }
 
-export function UploadModal({ isOpen, onClose, onConfirm, user }) {
+export function UploadModal({ isOpen, onClose, user }) {
   const [form, setForm] = useState({
     email: "",
     image: null,
@@ -986,8 +986,23 @@ export function UploadModal({ isOpen, onClose, onConfirm, user }) {
 
       console.log(updatedForm);
 
-      // Send Base64 image to parent
-      onConfirm(updatedForm);
+      fetch("/api/upload", {
+        method: "POST",
+        cache: "no-cache",
+        body: JSON.stringify({
+          ...form,
+        }),
+        headers: {
+          "Content-type": "application/json",
+        },
+      }).then(async (res) => {
+        handleLoading(false);
+        const data = await res.json();
+        if (res.status === 200) {
+          window.location.reload();
+        } else {
+        }
+      });
 
       onClose();
     } catch (error) {

