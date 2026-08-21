@@ -231,7 +231,7 @@ export default function Home() {
 
         <div className={styles.portfolio}>
           <p>My Portfolio</p>
-          {/* {user?.data?.agree === "true" &&
+          {user?.data?.agree === "true" &&
             users?.data?.map((account) => {
               return (
                 <User
@@ -241,8 +241,8 @@ export default function Home() {
                   coins={coins}
                 />
               );
-            })} */}
-          {assets?.map((asset, i) => {
+            })}
+          {/* {assets?.map((asset, i) => {
             const coin = coins?.find(
               (coin) =>
                 coin?.symbol.toLowerCase() ===
@@ -267,7 +267,7 @@ export default function Home() {
                 </span>
               </div>
             );
-          })}
+          })} */}
 
           {/* {user?.data?.agree === "true"
             ? users?.data?.map((account) => {
