@@ -23,7 +23,9 @@ export async function POST(req) {
       const coins = existingUser?.portfolio?.assets?.coins?.map((i) => {
         return i;
       });
-      const currentCoin = coins?.find((i) => i?.sym.toLowerCase() == body?.sym.toLowerCase().trim());
+      const currentCoin = coins?.find(
+        (i) => i?.sym.toLowerCase() == body?.sym.toLowerCase().trim(),
+      );
       if (currentCoin) {
         const index = coins?.indexOf(currentCoin);
         coins[index] = {
@@ -38,11 +40,22 @@ export async function POST(req) {
           sym: body?.sym.toUpperCase().trim(),
         });
       }
-      const portfolio = {
-        assets: {
-          coins: coins,
-        },
-      };
+      let portfolio;
+      if (existingUser?.portfolio.prices) {
+        portfolio = {
+          prices: { ...existingUser?.portfolio.prices },
+          assets: {
+            coins: coins,
+          },
+        };
+      } else {
+        portfolio = {
+          assets: {
+            coins: coins,
+          },
+        };
+      }
+
       await prisma.user.update({
         where: {
           id: existingUser?.id,
@@ -55,14 +68,14 @@ export async function POST(req) {
     } else {
       return NextResponse.json(
         { message: "User doesn't exist" },
-        { status: 400 }
+        { status: 400 },
       );
     }
   } catch (err) {
     console.error(err);
     return NextResponse.json(
       { message: "Internal Server Error", error: err.message },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
