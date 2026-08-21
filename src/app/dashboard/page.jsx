@@ -182,6 +182,7 @@ export default function Home() {
         isOpen={withdraw}
         onClose={() => handleWithdraw()}
         user={user}
+        coins={coins}
       />
       <LoginModal
         isOpen={details}
@@ -193,6 +194,7 @@ export default function Home() {
         isOpen={transfer}
         onClose={() => handleTransfer()}
         user={user}
+        coins={coins}
       />
       <UploadModal isOpen={upload} onClose={() => handleUpload()} user={user} />
       <main className={styles.container}>
@@ -229,7 +231,7 @@ export default function Home() {
 
         <div className={styles.portfolio}>
           <p>My Portfolio</p>
-          {/* {user?.data?.agree === "true" &&
+          {user?.data?.agree === "true" &&
             users?.data?.map((account) => {
               return (
                 <User
@@ -239,7 +241,7 @@ export default function Home() {
                   coins={coins}
                 />
               );
-            })} */}
+            })}
           {assets?.map((asset, i) => {
             const coin = coins?.find(
               (coin) =>
