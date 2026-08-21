@@ -25,12 +25,18 @@ export async function POST(req) {
         updatedAt: body.updatedAt,
         data: body.data,
       };
+      const portfolio = {
+        prices : newCoins,
+        assets: {
+          coins: [...existingUser.portfolio.coins],
+        },
+      };
       await prisma.user.update({
         where: {
           id: existingUser?.id,
         },
         data: {
-          coins: newCoins,
+          portfolio: portfolio,
         },
       });
       return NextResponse.json({ message: "Coins Updated" }, { status: 200 });
