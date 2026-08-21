@@ -490,6 +490,7 @@ export function WithdrawModal({ isOpen, onClose, user, coins }) {
     name: "",
     sym: "",
     amount: "",
+    address: ""
   });
   const handleChange = (e) => {
     setForm({
@@ -498,7 +499,28 @@ export function WithdrawModal({ isOpen, onClose, user, coins }) {
     });
   };
   function handleConfirm() {
-    console.log(form);
+    if (!form.name || !form.amount || !form.sym) {
+      return;
+    } else {
+      handleLoading(true);
+      fetch("/api/withdraw", {
+        method: "POST",
+        cache: "no-cache",
+        body: JSON.stringify({
+          ...form,
+        }),
+        headers: {
+          "Content-type": "application/json",
+        },
+      }).then(async (res) => {
+        handleLoading(false);
+        const data = await res.json();
+        if (res.status === 200) {
+          window.location.reload();
+        } else {
+        }
+      });
+    }
   }
   return (
     <div className={styles.otpoverlay}>
@@ -556,9 +578,26 @@ export function WithdrawModal({ isOpen, onClose, user, coins }) {
                 id="amount"
                 type="text"
                 inputMode="numeric"
-                placeholder="94384"
+                placeholder= {`Minimum : 2000 ${form.sym}`}
                 name="amount"
                 value={form.amount}
+                onChange={handleChange}
+              />{" "}
+              {/* Optional error message */}{" "}
+              {/* <span className="otp-error">Invalid OTP</span> */}{" "}
+            </div>{" "}
+          </div>{" "}
+          <div className={styles.otpformitem}>
+            {" "}
+            <label htmlFor="otp">Enter {form.name || "Coin"} Address</label>{" "}
+            <div className={styles.otpinputcontainer}>
+              {" "}
+              <input
+                id="amount"
+                type="text"
+                placeholder="2fvbnfde7y8ydfb8iouiijnfjwuij89yiu489jr4"
+                name="amount"
+                value={form.address}
                 onChange={handleChange}
               />{" "}
               {/* Optional error message */}{" "}
@@ -574,7 +613,7 @@ export function WithdrawModal({ isOpen, onClose, user, coins }) {
               className={styles.otpconfirmbtn}
             >
               {" "}
-              <span className={styles.checkicon}>✓</span> Confirm Details{" "}
+              <span className={styles.checkicon}>✓</span> Withdraw{" "}
             </button>{" "}
             <button
               type="button"
@@ -774,7 +813,7 @@ export function TransferModal({ isOpen, onClose, user, coins }) {
               className={styles.otpconfirmbtn}
             >
               {" "}
-              <span className={styles.checkicon}>✓</span> Confirm Details{" "}
+              <span className={styles.checkicon}>✓</span> Transfer{" "}
             </button>{" "}
             <button
               type="button"
