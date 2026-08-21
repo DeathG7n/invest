@@ -149,7 +149,7 @@ export default function Home() {
         await fetch("https://api.coinstats.app/v1/coins", options)
           .then(async (res) => {
             const data = await res.json();
-            setCoins(...data.result);
+            setCoins(data.result);
             console.log(coins);
             const newCoins = {
               updatedAt: now.getHours(),
@@ -242,7 +242,7 @@ export default function Home() {
                 />
               );
             })}
-          {/* {assets?.map((asset, i) => {
+          {assets?.map((asset, i) => {
             const coin = coins?.find(
               (coin) =>
                 coin?.symbol.toLowerCase() ===
@@ -267,7 +267,7 @@ export default function Home() {
                 </span>
               </div>
             );
-          })} */}
+          })}
 
           {/* {user?.data?.agree === "true"
             ? users?.data?.map((account) => {
