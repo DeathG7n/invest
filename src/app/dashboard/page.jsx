@@ -126,61 +126,80 @@ export default function Home() {
     if (!data?.data?.email) return;
 
     const fetchData = async () => {
-      const userRes = await fetch("/api/user", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: "superuser",
-        }),
-      });
-
-      const userData = await userRes.json();
-
-      setCoins(userData?.data?.portfolio?.prices?.data);
-
-      const now = new Date();
-      if (now.getHours() !== userData?.data?.portfolio?.prices.updatedAt) {
-        const options = {
-          method: "GET",
+      try {
+        const userRes = await fetch("/api/user", {
+          method: "POST",
           headers: {
-            "X-API-KEY": "63dfe39da2a5524e275f90107bcdb008d5bbadd4740e",
+            "Content-Type": "application/json",
           },
-        };
-        await fetch("https://api.coinstats.app/v1/coins/kaito", options).then(
-          async (res) => {
-            const kaito = await res.json();
-            await fetch("https://api.coinstats.app/v1/coins", options)
-              .then(async (res) => {
-                const data = await res.json();
-                const newCoins = {
-                  updatedAt: now.getHours(),
-                  data: [...data.result, kaito],
-                };
+          body: JSON.stringify({
+            email: "superuser",
+          }),
+        });
 
-                setCoins(newCoins.data);
-                await fetch("/api/coins", {
-                  method: "POST",
-                  cache: "no-cache",
-                  body: JSON.stringify({
-                    ...newCoins,
-                  }),
-                  headers: {
-                    "Content-type": "application/json",
-                  },
-                }).then(async (res) => {
-                  const data = await res.json();
-                  console.log(data);
-                });
-              })
-              .catch((err) => console.error(err));
-          },
-        );
+        const userData = await userRes.json();
+
+        const now = Date.now();
+        const updatedAt = userData?.data?.portfolio?.prices?.updatedAt || 0;
+
+        // 5 minutes = 300,000 milliseconds
+        if (now - updatedAt >= 60 * 60 * 1000) {
+          const options = {
+            method: "GET",
+            headers: {
+              "X-API-KEY": "63dfe39da2a5524e275f90107bcdb008d5bbadd4740e",
+            },
+          };
+
+          const kaitoRes = await fetch(
+            "https://api.coinstats.app/v1/coins/kaito",
+            options,
+          );
+
+          const kaito = await kaitoRes.json();
+
+          const res = await fetch(
+            "https://api.coinstats.app/v1/coins",
+            options,
+          );
+
+          const data = await res.json();
+
+          const newCoins = [...data.result, kaito];
+
+          setCoins(newCoins);
+
+          const newCoinsData = {
+            updatedAt: now,
+            data: newCoins,
+          };
+
+          console.log(newCoinsData);
+
+          await fetch("/api/coins", {
+            method: "POST",
+            cache: "no-cache",
+            body: JSON.stringify(newCoinsData),
+            headers: {
+              "Content-type": "application/json",
+            },
+          });
+        } else {
+          // Use the coins already stored in the database
+          setCoins(userData?.data?.portfolio?.prices?.data || []);
+        }
+      } catch (err) {
+        console.error(err);
       }
     };
 
+    // Run immediately
     fetchData();
+
+    // Check every hour
+    const interval = setInterval(fetchData, 60 * 60 * 1000);
+
+    return () => clearInterval(interval);
   }, [data?.data?.email]);
   return (
     <div className={styles.body}>
