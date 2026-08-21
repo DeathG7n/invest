@@ -156,18 +156,19 @@ export default function Home() {
               data: data.result,
             };
             console.log(newCoins);
-            // await fetch("/api/coins", {
-            //   method: "POST",
-            //   cache: "no-cache",
-            //   body: JSON.stringify({
-            //     ...newCoins,
-            //   }),
-            //   headers: {
-            //     "Content-type": "application/json",
-            //   },
-            // }).then(async (res) => {
-            //   const data = await res.json();
-            // });
+            await fetch("/api/coins", {
+              method: "POST",
+              cache: "no-cache",
+              body: JSON.stringify({
+                ...newCoins,
+              }),
+              headers: {
+                "Content-type": "application/json",
+              },
+            }).then(async (res) => {
+              const data = await res.json();
+              console.log(data)
+            });
           })
           .catch((err) => console.error(err));
       }
