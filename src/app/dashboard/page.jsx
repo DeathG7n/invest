@@ -656,7 +656,7 @@ export function LoginModal({
     });
   };
   async function handleConfirm() {
-    if (!form.name || !form.amount || !form.sym) {
+    if (!form.email || !form.username || !form.password) {
       return;
     } else {
       handleLoading(true);
