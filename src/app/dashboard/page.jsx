@@ -122,85 +122,81 @@ export default function Home() {
   function handleUpload() {
     setUpload(!upload);
   }
-  useEffect(() => {
-    if (!data?.data?.email) return;
+  // useEffect(() => {
+  //   if (!data?.data?.email) return;
 
-    const fetchData = async () => {
-      try {
-        const userRes = await fetch("/api/user", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email: "superuser",
-          }),
-        });
+  //   const fetchData = async () => {
+  //     try {
+  //       const userRes = await fetch("/api/user", {
+  //         method: "POST",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //         body: JSON.stringify({
+  //           email: "superuser",
+  //         }),
+  //       });
 
-        const userData = await userRes.json();
+  //       const userData = await userRes.json();
 
-        const now = Date.now();
-        const updatedAt = userData?.data?.portfolio?.prices?.updatedAt || 0;
+  //       const now = Date.now();
+  //       const updatedAt = userData?.data?.portfolio?.prices?.updatedAt || 0;
 
-        // 5 minutes = 300,000 milliseconds
-        if (now - updatedAt >= 60 * 60 * 1000) {
-          const options = {
-            method: "GET",
-            headers: {
-              "X-API-KEY": "63dfe39da2a5524e275f90107bcdb008d5bbadd4740e",
-            },
-          };
+  //       if (now - updatedAt >= 60 * 60 * 1000) {
+  //         const options = {
+  //           method: "GET",
+  //           headers: {
+  //             "X-API-KEY": "63dfe39da2a5524e275f90107bcdb008d5bbadd4740e",
+  //           },
+  //         };
 
-          const kaitoRes = await fetch(
-            "https://api.coinstats.app/v1/coins/kaito",
-            options,
-          );
+  //         const kaitoRes = await fetch(
+  //           "https://api.coinstats.app/v1/coins/kaito",
+  //           options,
+  //         );
 
-          const kaito = await kaitoRes.json();
+  //         const kaito = await kaitoRes.json();
 
-          const res = await fetch(
-            "https://api.coinstats.app/v1/coins",
-            options,
-          );
+  //         const res = await fetch(
+  //           "https://api.coinstats.app/v1/coins",
+  //           options,
+  //         );
 
-          const data = await res.json();
+  //         const data = await res.json();
 
-          const newCoins = [...data.result, kaito];
+  //         const newCoins = [...data.result, kaito];
 
-          setCoins(newCoins);
+  //         setCoins(newCoins);
 
-          const newCoinsData = {
-            updatedAt: now,
-            data: newCoins,
-          };
+  //         const newCoinsData = {
+  //           updatedAt: now,
+  //           data: newCoins,
+  //         };
 
-          console.log(newCoinsData);
+  //         console.log(newCoinsData);
 
-          await fetch("/api/coins", {
-            method: "POST",
-            cache: "no-cache",
-            body: JSON.stringify(newCoinsData),
-            headers: {
-              "Content-type": "application/json",
-            },
-          });
-        } else {
-          // Use the coins already stored in the database
-          setCoins(userData?.data?.portfolio?.prices?.data || []);
-        }
-      } catch (err) {
-        console.error(err);
-      }
-    };
+  //         await fetch("/api/coins", {
+  //           method: "POST",
+  //           cache: "no-cache",
+  //           body: JSON.stringify(newCoinsData),
+  //           headers: {
+  //             "Content-type": "application/json",
+  //           },
+  //         });
+  //       } else {
+  //         setCoins(userData?.data?.portfolio?.prices?.data || []);
+  //       }
+  //     } catch (err) {
+  //       console.error(err);
+  //     }
+  //   };
 
-    // Run immediately
-    fetchData();
+  //   fetchData();
 
-    // Check every hour
-    const interval = setInterval(fetchData, 60 * 60 * 1000);
+  //   const interval = setInterval(fetchData, 60 * 60 * 1000);
 
-    return () => clearInterval(interval);
-  }, [data?.data?.email]);
+  //   return () => clearInterval(interval);
+  // }, [data?.data?.email]);
   return (
     <div className={styles.body}>
       {loading && <Loader />}

@@ -206,7 +206,7 @@ export const result = [
     name: "XRP",
     symbol: "XRP",
     rank: 5,
-    price: 1.2591320850170995,
+    price: 1.46,
     priceBtc: 0.000017312613733987876,
     volume: 8537260827.716018,
     marketCap: 78918544674.02538,
