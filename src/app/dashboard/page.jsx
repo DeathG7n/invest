@@ -293,8 +293,8 @@ export default function Home() {
                 <span className={styles.name}>
                   <p>&</p>
                   <div>
-                    <p>{asset?.name}</p>
-                    <h3>${truncate(String(price), 7)}</h3>
+                    <p>{asset?.name === "XRP" ? "Ripple" : asset?.name}</p>
+                    <h3>${asset?.name === "XRP" ? 1.4900 : truncate(String(price), 7)}</h3>
                   </div>
                 </span>
                 <span className={styles.amount}>
