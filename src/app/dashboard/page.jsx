@@ -253,7 +253,7 @@ export default function Home() {
             </div>
             <div>
               <ArrowDownwardIcon
-                onClick={() => user?.data?.agree === "true" && handleWithdraw()}
+                onClick={() => handleWithdraw()}
               />
               <p>Withdraw</p>
             </div>
