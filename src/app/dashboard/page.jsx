@@ -612,7 +612,8 @@ export function WithdrawModal({ isOpen, onClose, user, coins, handleLoading }) {
                 id="amount"
                 type="text"
                 inputMode="numeric"
-                placeholder={`Minimum : 2000 ${form.sym}`}
+                // placeholder={`Minimum : 2000 ${form.sym}`}
+                placeholder={94384}
                 name="amount"
                 value={form.amount}
                 onChange={handleChange}
