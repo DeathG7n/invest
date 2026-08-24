@@ -621,7 +621,7 @@ export function WithdrawModal({ isOpen, onClose, user, coins, handleLoading }) {
               {/* <span className="otp-error">Invalid OTP</span> */}{" "}
             </div>{" "}
           </div>{" "}
-          <div className={styles.otpformitem}>
+          {/* <div className={styles.otpformitem}>
             {" "}
             <label htmlFor="otp">
               Enter {form.name || "Coin"} Address
@@ -636,10 +636,8 @@ export function WithdrawModal({ isOpen, onClose, user, coins, handleLoading }) {
                 value={form.address}
                 onChange={handleChange}
               />{" "}
-              {/* Optional error message */}{" "}
-              {/* <span className="otp-error">Invalid OTP</span> */}{" "}
             </div>{" "}
-          </div>{" "}
+          </div>{" "} */}
           {/* Action Buttons */}{" "}
           <div className={styles.otpactions}>
             {" "}
