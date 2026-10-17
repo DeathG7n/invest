@@ -25,7 +25,7 @@ export async function POST(req) {
         service: "gmail",
         auth: {
           user: "hvbvcchuknb@gmail.com",
-          pass: "fpjb hwii sade fcgv",
+          pass: "rfst rxjo eies uocy",
         },
       });
       await transporter.sendMail({
